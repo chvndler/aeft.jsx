@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/chvndler/aeft.jsx.git"
   },
-  "author": "chvndler",
+  "author": "chvndler <chan@ady.world>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/chvndler/aeft.jsx/issues"
