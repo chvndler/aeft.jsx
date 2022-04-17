@@ -1,16 +1,24 @@
-/*************************************************************************
- * ADOBE CONFIDENTIAL
- * ___________________
+/**
+ * @title Interval by AtelierDesign
+ * @version 1.0
+ * @author Chandler Chappell <chan@ady.world>
  *
- * Copyright 2014 Adobe Inc.
- * All Rights Reserved.
+ * @description Add an adjustment layer above the currently selected layer to break the 3D space of
+ * After Effects. If no layers are selected the adjustment layer will be added at the top.
  *
- * NOTICE: Adobe permits you to use, modify, and distribute this file in
+ * @license This script is provided "as is," without warranty of any kind, expressed or implied. In
+ * no event shall the author be held liable for any damages arising in any way from the use of this
+ * script.
+ *
+ * @notice: Adobe permits you to use, modify, and distribute this file in
  * accordance with the terms of the Adobe license agreement accompanying
  * it. If you have received this file from a source other than Adobe,
  * then your use, modification, or distribution of it requires the prior
  * written permission of Adobe.
- **************************************************************************/
+ *
+ * Copyright 2014 Adobe Inc.
+ * All Rights Reserved.
+ **/
 
 //DIRECTORY
 var comp;
@@ -23,7 +31,11 @@ function grainLevelChange(value) {
   for (i = 1; i < comp.numLayers; i++) {
     if (comp.layer(i).name == '03-GRAIN.mp4') {
       var effect = comp.layer(i);
-      effect.property('ADBE Effect Parade').property(1).property('ADBE Brightness & Contrast 2-0002').setValue(value);
+      effect
+        .property('ADBE Effect Parade')
+        .property(1)
+        .property('ADBE Brightness & Contrast 2-0002')
+        .setValue(value);
     }
   }
 }
@@ -33,7 +45,11 @@ function blooomAmoutChange(value) {
   for (i = 1; i < comp.numLayers; i++) {
     if (comp.layer(i).name == 'RED & BLUR') {
       var effect = comp.layer(i);
-      effect.property('ADBE Effect Parade').property(2).property('ADBE Gaussian Blur 2-0001').setValue(value);
+      effect
+        .property('ADBE Effect Parade')
+        .property(2)
+        .property('ADBE Gaussian Blur 2-0001')
+        .setValue(value);
     }
   }
 }
@@ -226,7 +242,13 @@ function importToComp() {
     };
     var transformAV = findProjectItem(assetsFolder, false, transformAV_properties);
     if (transformAV === null) {
-      var calqueDeffets1_tempSolid = comp.layers.addSolid(col, transformAV_properties.name, compWidth, compHeight, px);
+      var calqueDeffets1_tempSolid = comp.layers.addSolid(
+        col,
+        transformAV_properties.name,
+        compWidth,
+        compHeight,
+        px,
+      );
       var transformAV = calqueDeffets1_tempSolid.source;
       transformAV.parentFolder = assetsFolder;
       calqueDeffets1_tempSolid.remove();
@@ -241,7 +263,13 @@ function importToComp() {
     };
     var flickerAV = findProjectItem(assetsFolder, false, flickerAV_properties);
     if (flickerAV === null) {
-      var calqueDeffets1_tempSolid = comp.layers.addSolid(col, flickerAV_properties.name, compWidth, compHeight, px);
+      var calqueDeffets1_tempSolid = comp.layers.addSolid(
+        col,
+        flickerAV_properties.name,
+        compWidth,
+        compHeight,
+        px,
+      );
       flickerAV = calqueDeffets1_tempSolid.source;
       flickerAV.parentFolder = assetsFolder;
       calqueDeffets1_tempSolid.remove();
@@ -256,7 +284,13 @@ function importToComp() {
     };
     var colorGlowAV = findProjectItem(assetsFolder, false, colorGlowAV_properties);
     if (colorGlowAV === null) {
-      var tempSolid = comp.layers.addSolid(col, colorGlowAV_properties.name, compWidth, compHeight, px);
+      var tempSolid = comp.layers.addSolid(
+        col,
+        colorGlowAV_properties.name,
+        compWidth,
+        compHeight,
+        px,
+      );
       colorGlowAV = tempSolid.source;
       colorGlowAV.parentFolder = assetsFolder;
       tempSolid.remove();
@@ -271,7 +305,13 @@ function importToComp() {
     };
     var redBlurAV = findProjectItem(app.project.rootFolder, false, redBlurAV_properties);
     if (redBlurAV === null) {
-      var tempSolid = comp.layers.addSolid(col, redBlurAV_properties.name, compWidth, compHeight, px);
+      var tempSolid = comp.layers.addSolid(
+        col,
+        redBlurAV_properties.name,
+        compWidth,
+        compHeight,
+        px,
+      );
       redBlurAV = tempSolid.source;
       redBlurAV.parentFolder = assetsFolder;
       tempSolid.remove();
@@ -306,7 +346,10 @@ function importToComp() {
     flicker.selected = false;
     // Apply expressions to properties
     try {
-      flicker.property('ADBE Effect Parade').property(1).property('ADBE Exposure2-0003').expression = 'wiggle(10,0.1)';
+      flicker
+        .property('ADBE Effect Parade')
+        .property(1)
+        .property('ADBE Exposure2-0003').expression = 'wiggle(10,0.1)';
     } catch (err) {}
 
     // Add existing Solid Layer "Calque d'effets 3", varName "colorGlowAV";
@@ -325,18 +368,46 @@ function importToComp() {
       );
     }
     colorGlow.property('ADBE Effect Parade').property(1).name = 'LUMETRI';
-    colorGlow.property('ADBE Effect Parade').property(1).property('ADBE Lumetri-0063').setValue(100);
-    colorGlow.property('ADBE Effect Parade').property(1).property('ADBE Lumetri-0012').setValue(-50);
-    colorGlow.property('ADBE Effect Parade').property(1).property('ADBE Lumetri-0013').setValue(-36);
+    colorGlow
+      .property('ADBE Effect Parade')
+      .property(1)
+      .property('ADBE Lumetri-0063')
+      .setValue(100);
+    colorGlow
+      .property('ADBE Effect Parade')
+      .property(1)
+      .property('ADBE Lumetri-0012')
+      .setValue(-50);
+    colorGlow
+      .property('ADBE Effect Parade')
+      .property(1)
+      .property('ADBE Lumetri-0013')
+      .setValue(-36);
     colorGlow.property('ADBE Effect Parade').property(1).property('ADBE Lumetri-0015').setValue(22);
-    colorGlow.property('ADBE Effect Parade').property(1).property('ADBE Lumetri-0065').setValue(100);
-    colorGlow.property('ADBE Effect Parade').property(1).property('ADBE Lumetri-0066').setValue(100);
+    colorGlow
+      .property('ADBE Effect Parade')
+      .property(1)
+      .property('ADBE Lumetri-0065')
+      .setValue(100);
+    colorGlow
+      .property('ADBE Effect Parade')
+      .property(1)
+      .property('ADBE Lumetri-0066')
+      .setValue(100);
     colorGlow.property('ADBE Effect Parade').property(1).property('ADBE Lumetri-0097').setValue(1);
     colorGlow.property('ADBE Effect Parade').addProperty('ADBE Glo2');
     colorGlow.property('ADBE Effect Parade').property(2).name = 'GLOW';
-    colorGlow.property('ADBE Effect Parade').property(2).property('ADBE Glo2-0002').setValue(112.199996948242);
+    colorGlow
+      .property('ADBE Effect Parade')
+      .property(2)
+      .property('ADBE Glo2-0002')
+      .setValue(112.199996948242);
     colorGlow.property('ADBE Effect Parade').property(2).property('ADBE Glo2-0003').setValue(300);
-    colorGlow.property('ADBE Effect Parade').property(2).property('ADBE Glo2-0004').setValue(0.10000000149012);
+    colorGlow
+      .property('ADBE Effect Parade')
+      .property(2)
+      .property('ADBE Glo2-0004')
+      .setValue(0.10000000149012);
     colorGlow.selected = false;
 
     // Add existing Solid Layer "Calque d'effets 1", varName "redBlurAV";
@@ -348,10 +419,26 @@ function importToComp() {
     redBlur.blendingMode = BlendingMode.LIGHTEN;
     redBlur.property('ADBE Effect Parade').addProperty('ADBE Channel Blur');
     redBlur.property('ADBE Effect Parade').property(1).name = 'CHANNEL BLUR';
-    redBlur.property('ADBE Effect Parade').property(1).property('ADBE Channel Blur-0001').setValue(100);
-    redBlur.property('ADBE Effect Parade').property(1).property('ADBE Channel Blur-0002').setValue(22);
-    redBlur.property('ADBE Effect Parade').property(1).property('ADBE Channel Blur-0005').setValue(1);
-    redBlur.property('ADBE Effect Parade').property(1).property('ADBE Channel Blur-0006').setValue(3);
+    redBlur
+      .property('ADBE Effect Parade')
+      .property(1)
+      .property('ADBE Channel Blur-0001')
+      .setValue(100);
+    redBlur
+      .property('ADBE Effect Parade')
+      .property(1)
+      .property('ADBE Channel Blur-0002')
+      .setValue(22);
+    redBlur
+      .property('ADBE Effect Parade')
+      .property(1)
+      .property('ADBE Channel Blur-0005')
+      .setValue(1);
+    redBlur
+      .property('ADBE Effect Parade')
+      .property(1)
+      .property('ADBE Channel Blur-0006')
+      .setValue(3);
     if (redBlur.property('ADBE Effect Parade').canAddProperty('ADBE Gaussian Blur 2')) {
       redBlur.property('ADBE Effect Parade').addProperty('ADBE Gaussian Blur 2');
     } else {
@@ -362,9 +449,21 @@ function importToComp() {
       );
     }
     redBlur.property('ADBE Effect Parade').property(2).name = 'GAUSSIAN BLUR';
-    redBlur.property('ADBE Effect Parade').property(2).property('ADBE Gaussian Blur 2-0001').setValue(44);
-    redBlur.property('ADBE Effect Parade').property(2).property('ADBE Gaussian Blur 2-0002').setValue(2);
-    redBlur.property('ADBE Effect Parade').property(2).property('ADBE Gaussian Blur 2-0003').setValue(1);
+    redBlur
+      .property('ADBE Effect Parade')
+      .property(2)
+      .property('ADBE Gaussian Blur 2-0001')
+      .setValue(44);
+    redBlur
+      .property('ADBE Effect Parade')
+      .property(2)
+      .property('ADBE Gaussian Blur 2-0002')
+      .setValue(2);
+    redBlur
+      .property('ADBE Effect Parade')
+      .property(2)
+      .property('ADBE Gaussian Blur 2-0003')
+      .setValue(1);
     redBlur.selected = false;
 
     return {
@@ -440,11 +539,19 @@ function importFiles(fileList) {
         case '05-HORIZONTAL_BAR.mov':
           footage.property('ADBE Effect Parade').addProperty('ADBE Exposure2');
           footage.property('ADBE Effect Parade').property(1).name = 'Exposure';
-          footage.property('ADBE Effect Parade').property(1).property('ADBE Exposure2-0003').setValue(1.6);
+          footage
+            .property('ADBE Effect Parade')
+            .property(1)
+            .property('ADBE Exposure2-0003')
+            .setValue(1.6);
 
           footage.property('ADBE Effect Parade').addProperty('ADBE Glo2');
           footage.property('ADBE Effect Parade').property(2).name = 'GLOW';
-          footage.property('ADBE Effect Parade').property(2).property('ADBE Glo2-0002').setValue(81.6);
+          footage
+            .property('ADBE Effect Parade')
+            .property(2)
+            .property('ADBE Glo2-0002')
+            .setValue(81.6);
           footage.property('ADBE Effect Parade').property(2).property('ADBE Glo2-0003').setValue(0);
           footage.property('ADBE Effect Parade').property(2).property('ADBE Glo2-0004').setValue(0);
           footage.selected = false;
@@ -457,7 +564,11 @@ function importFiles(fileList) {
         case '09-DIRTY_EDGES.mov':
           footage.property('ADBE Effect Parade').addProperty('ADBE Gaussian Blur 2');
           footage.property('ADBE Effect Parade').property(1).name = 'GAUSSIAN BLUR';
-          footage.property('ADBE Effect Parade').property(1).property('ADBE Gaussian Blur 2-0001').setValue(4);
+          footage
+            .property('ADBE Effect Parade')
+            .property(1)
+            .property('ADBE Gaussian Blur 2-0001')
+            .setValue(4);
           footage.selected = false;
           break;
       }
@@ -559,7 +670,10 @@ function propertiesMatch(projectItem, userData) {
       if (userData[propertyName].toString() !== projectItem[propertyName].toString()) {
         return false;
       }
-    } else if (typeof userData[propertyName] === 'object' && typeof projectItem[propertyName] === 'object') {
+    } else if (
+      typeof userData[propertyName] === 'object' &&
+      typeof projectItem[propertyName] === 'object'
+    ) {
       if (!propertiesMatch(projectItem[propertyName], userData[propertyName])) {
         return false;
       }
