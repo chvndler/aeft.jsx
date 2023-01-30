@@ -4,8 +4,10 @@ node_modules
 
 .prettierrc
 package-lock.json
-# package.json
+package.json
 
 .vscode/
 
 .yarn/
+
+yarn.lock

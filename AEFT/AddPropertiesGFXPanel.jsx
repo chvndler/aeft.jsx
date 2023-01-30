@@ -13,13 +13,13 @@
   function isExpressionControl(property) {
     var isExpressionControl = false;
     switch (property.propertyGroup(1).matchName) {
-      case 'ADBE Point3D Control':
-      case 'ADBE Angle Control':
-      case 'ADBE Checkbox Control':
-      case 'ADBE Color Control':
-      case 'ADBE Layer Control':
-      case 'ADBE Point Control':
-      case 'ADBE Slider Control':
+      case "ADBE Point3D Control":
+      case "ADBE Angle Control":
+      case "ADBE Checkbox Control":
+      case "ADBE Color Control":
+      case "ADBE Layer Control":
+      case "ADBE Point Control":
+      case "ADBE Slider Control":
         isExpressionControl = true;
     }
     if (property.isDropdownEffect === true) {
@@ -28,7 +28,7 @@
     return isExpressionControl;
   }
 
-  app.beginUndoGroup('Add Selected Properties to Essential Graphics Panel');
+  app.beginUndoGroup("Add Selected Properties to Essential Graphics Panel");
   var comp = app.project.activeItem;
   var properties = comp.selectedProperties;
   var numProperties = properties.length;

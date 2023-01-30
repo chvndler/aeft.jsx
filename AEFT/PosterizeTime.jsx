@@ -9,17 +9,26 @@
  */
 
 (function () {
-  app.beginUndoGroup('Add Posterize Time');
+  app.beginUndoGroup("Add Posterize Time");
   var comp = app.project.activeItem;
   var color = [0.5, 0.5, 0.5];
-  var name = 'Posterize Time';
+  var name = "Posterize Time";
   var width = comp.width;
   var height = comp.height;
   var pixelAspect = comp.pixelAspect;
   var duration = comp.duration;
-  var layer = comp.layers.addSolid(color, name, width, height, pixelAspect, duration);
+  var layer = comp.layers.addSolid(
+    color,
+    name,
+    width,
+    height,
+    pixelAspect,
+    duration
+  );
   layer.adjustmentLayer = true;
-  var effect = layer.property('ADBE Effect Parade').addProperty('ADBE Posterize Time');
+  var effect = layer
+    .property("ADBE Effect Parade")
+    .addProperty("ADBE Posterize Time");
   effect.property(1).setValue(12);
   app.endUndoGroup();
 })();

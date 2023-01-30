@@ -9,7 +9,7 @@
  */
 
 (function () {
-  app.beginUndoGroup('Reset Composition Work Area');
+  app.beginUndoGroup("Reset Composition Work Area");
   var comp = app.project.activeItem;
   comp.workAreaStart = 0;
   comp.workAreaDuration = comp.duration;

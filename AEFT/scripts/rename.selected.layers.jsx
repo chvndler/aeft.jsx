@@ -1,4 +1,7 @@
 /**
+ * @title Rename Selected Layers
+ * @version 1.0.0
+ * @author Chandler Chappell <@chvndler>
  *
  * @description Rename selected layers and append zero padded numbers.
  *

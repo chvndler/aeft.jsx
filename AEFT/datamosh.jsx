@@ -6,8 +6,9 @@ function test_host(obj) {
   alert(obj.value);
   // var res = JSON.parse(obj)
   // alert(res.money)
-  return 'hola from extendscript ';
+  return "hola from extendscript ";
 }
+
 function testObj(obj) {
   alert(obj.value);
   // var res = JSON.parse(obj)
@@ -23,7 +24,7 @@ function getSyncData(data) {
   var swapIndex = data.swapIndex;
   var removeIndex = data.removeIndex;
   var moshLayersObj = {
-    checkedKey: '',
+    checkedKey: "",
     checkedMVIndex: -1,
     checkedSwapIndex: -1,
     checkedRemoveIndex: -1,
@@ -39,11 +40,19 @@ function getSyncData(data) {
     // Check if Layers
     if (mainComp.numLayers != 0) {
       // Check if existing indexes are right
-      var foundMVLayer = checkIndexForLayer(key, mvIndex, 'Mosh-MV-');
-      var foundSwapLayer = checkIndexForLayer(key, swapIndex, 'Mosh-Swap-');
-      var foundRemoveLayer = checkIndexForLayer(key, removeIndex, 'Mosh-Remove-');
+      var foundMVLayer = checkIndexForLayer(key, mvIndex, "Mosh-MV-");
+      var foundSwapLayer = checkIndexForLayer(key, swapIndex, "Mosh-Swap-");
+      var foundRemoveLayer = checkIndexForLayer(
+        key,
+        removeIndex,
+        "Mosh-Remove-"
+      );
       // If they are all right
-      if (foundMVLayer[1] != -1 && foundSwapLayer[1] != -1 && foundRemoveLayer[1] != -1) {
+      if (
+        foundMVLayer[1] != -1 &&
+        foundSwapLayer[1] != -1 &&
+        foundRemoveLayer[1] != -1
+      ) {
         moshLayersObj.checkedKey = foundMVLayer[0];
         moshLayersObj.checkedMVIndex = foundMVLayer[1];
         moshLayersObj.checkedSwapIndex = foundSwapLayer[1];
@@ -64,7 +73,7 @@ function getActiveLayerData() {
   var index = -1;
   var mainComp = app.project.activeItem;
   var selectedLayer = mainComp.selectedLayers[0];
-  if (selectedLayer && selectedLayer.name.slice(0, 5) == 'Mosh-') {
+  if (selectedLayer && selectedLayer.name.slice(0, 5) == "Mosh-") {
     var name = selectedLayer.name;
     key = name.slice(name.length - 5);
     index = selectedLayer.index;
@@ -82,16 +91,20 @@ function checkIndexForLayer(key, index, type) {
   if (index < mainComp.numLayers && index != -1) {
     // First Check if existing layer index is right
     var name = mainComp.layer(index).name;
-    if (name.length > type.length + 2 && name.slice(name.length - 5) == key && name.slice(0, type.length) == type) {
+    if (
+      name.length > type.length + 2 &&
+      name.slice(name.length - 5) == key &&
+      name.slice(0, type.length) == type
+    ) {
       // Existing index is correct
     } else {
       // Existing index false, find it
-      checkedKey = '';
+      checkedKey = "";
       checkedIndex = -1;
     }
   } else {
     // Existing index too big or none existent thus false, find it
-    checkedKey = '';
+    checkedKey = "";
     checkedIndex = -1;
   }
 
@@ -101,7 +114,7 @@ function checkIndexForLayer(key, index, type) {
 function loopAndFindLayers() {
   var mainComp = app.project.activeItem;
   var moshLayersObj = {
-    checkedKey: '',
+    checkedKey: "",
     checkedMVIndex: -1,
     checkedSwapIndex: -1,
     checkedRemoveIndex: -1,
@@ -111,18 +124,18 @@ function loopAndFindLayers() {
   // Loop through layers
   for (var i = 1; i <= mainComp.numLayers; i++) {
     var name = mainComp.layer(i).name;
-    if (name.length > 6 && name.slice(0, 5) == 'Mosh-') {
+    if (name.length > 6 && name.slice(0, 5) == "Mosh-") {
       var layerKey = name.slice(-5);
       var layerType = name.slice(0, -5);
       // Mosh Layer found, identify which and set index
       switch (layerType) {
-        case 'Mosh-MV-':
+        case "Mosh-MV-":
           moshLayersObj.checkedMVIndex = i;
           break;
-        case 'Mosh-Swap-':
+        case "Mosh-Swap-":
           moshLayersObj.checkedSwapIndex = i;
           break;
-        case 'Mosh-Remove-':
+        case "Mosh-Remove-":
           moshLayersObj.checkedRemoveIndex = i;
           break;
       }
@@ -139,7 +152,7 @@ function getCompName() {
   if (mainComp instanceof CompItem) {
     name = mainComp.name;
   } else {
-    name = 'null';
+    name = "null";
   }
   return name;
 }
@@ -151,9 +164,9 @@ function makeNewMoshLayer(data) {
   var name = string + key;
   var newMoshLayer = mainComp.layers.addSolid([0, 0, 0], name, 50, 50, 1);
   newMoshLayer.adjustmentLayer = true;
-  if (string == 'Mosh-Swap-') newMoshLayer.label = 13;
-  if (string == 'Mosh-Remove-') newMoshLayer.label = 13;
-  if (string == 'Mosh-MV-') newMoshLayer.label = 13;
+  if (string == "Mosh-Swap-") newMoshLayer.label = 13;
+  if (string == "Mosh-Remove-") newMoshLayer.label = 13;
+  if (string == "Mosh-MV-") newMoshLayer.label = 13;
 }
 
 function deleteLayer(data) {
@@ -168,7 +181,7 @@ function getLayerData(data) {
 
   var mainComp = app.project.activeItem;
   var moshLayer = mainComp.layer(index);
-  var markerProperty = moshLayer.property('Marker');
+  var markerProperty = moshLayer.property("Marker");
   var layerDataArray = [];
 
   var totalMarkers = markerProperty.numKeys;
@@ -181,7 +194,9 @@ function getLayerData(data) {
   } else {
     layerDataArray.push(-1);
   }
-  return JSON.stringify({ layerDataArray: layerDataArray });
+  return JSON.stringify({
+    layerDataArray: layerDataArray,
+  });
 }
 
 function checkActiveItem() {
@@ -199,17 +214,19 @@ function openDialog(data) {
   var returnPath;
   if (initPath) {
     var initFile = new File(initPath);
-    var file = initFile.openDlg('Choose ' + name + ' executable:');
+    var file = initFile.openDlg("Choose " + name + " executable:");
     if (file) {
       returnPath = file.fsName;
     }
   } else {
-    var file = File.openDialog('Choose ' + name + ' executable:');
+    var file = File.openDialog("Choose " + name + " executable:");
     if (file) {
       returnPath = file.fsName;
     }
   }
-  return JSON.stringify({ returnPath: returnPath });
+  return JSON.stringify({
+    returnPath: returnPath,
+  });
 }
 
 // ****** MARKER AHNDLER ******
@@ -238,11 +255,13 @@ function placeMarker(objData) {
   var makeNewMarker = new MarkerValue(module.preset.label);
   makeNewMarker.duration = module.duration;
   makeNewMarker.label = module.colorIndex;
-  makeNewMarker.setParameters({ jsonData: JSON.stringify(module) });
+  makeNewMarker.setParameters({
+    jsonData: JSON.stringify(module),
+  });
 
-  activeLayer.property('Marker').setValueAtTime(time, makeNewMarker);
+  activeLayer.property("Marker").setValueAtTime(time, makeNewMarker);
 
-  return 'Success place marker';
+  return "Success place marker";
 }
 
 function getFrameDuration() {
@@ -253,7 +272,7 @@ function getFrameDuration() {
 function checkIfMarkerExists(time, activeLayerIndex) {
   var mainComp = app.project.activeItem;
   var activeLayer = mainComp.layer(activeLayerIndex);
-  var markerProperty = activeLayer.property('Marker');
+  var markerProperty = activeLayer.property("Marker");
   var totalMarkers = markerProperty.numKeys;
 
   var markerExistsAtTime = false;
@@ -275,7 +294,7 @@ function deleteMarker(objData) {
   var mainComp = app.project.activeItem;
   var activeLayer = mainComp.layer(activeLayerIndex);
 
-  var markerProperty = activeLayer.property('Marker');
+  var markerProperty = activeLayer.property("Marker");
 
   var totalMarkers = markerProperty.numKeys;
   var foundMarkerIndex;
@@ -288,7 +307,7 @@ function deleteMarker(objData) {
     }
   }
   markerProperty.removeKey(foundMarkerIndex);
-  return 'Deleted Marker';
+  return "Deleted Marker";
 }
 
 function updateMarker(objData) {
@@ -297,32 +316,34 @@ function updateMarker(objData) {
 
   var mainComp = app.project.activeItem;
   var activeLayer = mainComp.layer(activeLayerIndex);
-  var markerProperty = activeLayer.property('Marker');
+  var markerProperty = activeLayer.property("Marker");
 
   var totalMarkers = markerProperty.numKeys;
   // Loop through all markers
   for (var i = 1; i <= totalMarkers; i++) {
     var markerParamsJson = markerProperty.keyValue(i).getParameters();
     var markerParams = JSON.parse(markerParamsJson.jsonData);
-    var updateMarker = activeLayer.property('Marker').keyValue(i);
+    var updateMarker = activeLayer.property("Marker").keyValue(i);
     // Loop through modules to see if they fit the marker
     for (var j = 0; j < modules.length; j++) {
       if (markerParams.key == modules[j].key) {
-        updateMarker.setParameters({ jsonData: JSON.stringify(modules[j]) });
+        updateMarker.setParameters({
+          jsonData: JSON.stringify(modules[j]),
+        });
         updateMarker.comment = modules[j].preset.label;
-        activeLayer.property('Marker').setValueAtKey(i, updateMarker);
+        activeLayer.property("Marker").setValueAtKey(i, updateMarker);
         break;
       }
     }
   }
 
-  return 'success';
+  return "success";
 }
 
 function getIndexFromKey(key, activeLayerIndex) {
   var mainComp = app.project.activeItem;
   var activeLayer = mainComp.layer(activeLayerIndex);
-  var markerProperty = activeLayer.property('Marker');
+  var markerProperty = activeLayer.property("Marker");
   var foundMarkerIndex;
   var totalMarkers = markerProperty.numKeys;
 
@@ -344,7 +365,7 @@ function getMarkerTime(data) {
 
   var mainComp = app.project.activeItem;
   var activeLayer = mainComp.layer(activeLayerIndex);
-  var markerProperty = activeLayer.property('Marker');
+  var markerProperty = activeLayer.property("Marker");
 
   var markerIn = markerProperty.keyTime(markerIndex);
   var markerOut = markerProperty.keyValue(markerIndex).duration + markerIn;
@@ -355,7 +376,7 @@ function getRFMarkerTime(data) {
   const activeLayerIndex = data.activeLayerIndex;
   var mainComp = app.project.activeItem;
   var activeLayer = mainComp.layer(activeLayerIndex);
-  var markerProperty = activeLayer.property('Marker');
+  var markerProperty = activeLayer.property("Marker");
 
   var timesArray = [];
 
@@ -371,7 +392,7 @@ function getSwapMarkersTimes(data) {
   const key = data.key;
   var mainComp = app.project.activeItem;
   var activeLayer = mainComp.layer(activeLayerIndex);
-  var markerProperty = activeLayer.property('Marker');
+  var markerProperty = activeLayer.property("Marker");
   var markersTimes = {
     rIn: 0,
     rOut: 0,
@@ -383,12 +404,12 @@ function getSwapMarkersTimes(data) {
   for (var i = 1; i <= totalMarkers; i++) {
     var markerParamsJson = markerProperty.keyValue(i).getParameters();
     var markerParams = JSON.parse(markerParamsJson.jsonData);
-    if (markerParams.preset.label == 'Donor') {
+    if (markerParams.preset.label == "Donor") {
       var markerIn = markerProperty.keyTime(i);
       var markerOut = markerProperty.keyValue(i).duration + markerIn;
       markersTimes.dIn = markerIn;
       markersTimes.dOut = markerOut;
-    } else if (markerParams.preset.label == 'Receiver') {
+    } else if (markerParams.preset.label == "Receiver") {
       var markerIn = markerProperty.keyTime(i);
       var markerOut = markerProperty.keyValue(i).duration + markerIn;
       markersTimes.rIn = markerIn;
@@ -408,7 +429,7 @@ function addToRenderer(cepCall) {
   rq_item.render = true;
 
   // Return string if CEP call
-  if (cepCall) return 'success';
+  if (cepCall) return "success";
   else return rq_item;
 }
 
@@ -422,7 +443,9 @@ function addToRenderGetTemplates() {
   // get templates
   var outputModule = rq_item.outputModule(1);
   validTemplates = getValidTemplates(rq_item);
-  return JSON.stringify({ validTemplates: validTemplates });
+  return JSON.stringify({
+    validTemplates: validTemplates,
+  });
 }
 
 function setTemplateAndTrigger(data) {
@@ -442,7 +465,7 @@ function setTemplateAndTrigger(data) {
 
   renderQueue.render();
 
-  return 'Success';
+  return "Success";
 }
 
 function checkIfTemplateExists(template, outputTemplates) {
@@ -457,21 +480,30 @@ function checkIfTemplateExists(template, outputTemplates) {
 }
 
 function getValidTemplates(rq_item) {
-  const VALID_FORMATS = ['AVI', 'QuickTime'];
+  const VALID_FORMATS = ["AVI", "QuickTime"];
   var validTemplates = [];
   var templates = rq_item.outputModule(1).templates;
   for (var i = 0; i < templates.length; i++) {
     rq_item.outputModule(1).applyTemplate(templates[i]);
     var isValidFormat = false;
-    var extension = rq_item.outputModule(1).getSettings().Format.toLowerCase() == 'avi' ? '.avi' : '.mov';
+    var extension =
+      rq_item.outputModule(1).getSettings().Format.toLowerCase() == "avi"
+        ? ".avi"
+        : ".mov";
     for (var j = 0; j < VALID_FORMATS.length; j++) {
-      if (VALID_FORMATS[j].toLowerCase() === rq_item.outputModule(1).getSettings().Format.toLowerCase()) {
+      if (
+        VALID_FORMATS[j].toLowerCase() ===
+        rq_item.outputModule(1).getSettings().Format.toLowerCase()
+      ) {
         isValidFormat = true;
         break;
       }
     }
     if (isValidFormat) {
-      validTemplates.push({ template: templates[i], ext: extension });
+      validTemplates.push({
+        template: templates[i],
+        ext: extension,
+      });
     }
   }
   return validTemplates;
@@ -483,16 +515,18 @@ function getProjectPath() {
   if (app.project.file !== null) {
     projectPath = app.project.file.fsName;
   } else {
-    alert('Please save your project file first.');
+    alert("Please save your project file first.");
   }
   return JSON.stringify(projectPath);
 }
+
 function openInViewer() {
   var mainComp = app.project.activeItem;
   mainComp.openInViewer();
-  var text = 'success';
+  var text = "success";
   return text;
 }
+
 function importBakedFile(obj) {
   var file = obj.file;
   var time = obj.time;
@@ -502,15 +536,17 @@ function importBakedFile(obj) {
   mainComp.layers.add(bakedFile);
   mainComp.layer(1).startTime = time;
   // Set parent folder
-  const folderName = 'Datamosh2';
+  const folderName = "Datamosh2";
   const folder = getFolderByName(folderName);
   bakedFile.parentFolder = folder;
-  return 'Success importing baked Mosh';
+  return "Success importing baked Mosh";
 }
+
 function getCompFramerate() {
   var mainComp = app.project.activeItem;
   return 1 / mainComp.frameDuration;
 }
+
 function getCompData() {
   var mainComp = app.project.activeItem;
   var data = {
@@ -527,6 +563,7 @@ function getCompData() {
   data.workAreaOut = mainComp.workAreaStart + mainComp.workAreaDuration;
   return JSON.stringify(data);
 }
+
 function setWorkArea(data) {
   var timeIn = data.timeIn;
   var timeOut = data.timeOut;
@@ -535,12 +572,16 @@ function setWorkArea(data) {
   mainComp.workAreaStart = timeIn;
   mainComp.workAreaDuration = timeOut - timeIn;
 
-  return 'success';
+  return "success";
 }
+
 function getFolderByName(folderName) {
   var myProject = app.project;
   for (var i = 1; i <= myProject.numItems; i++) {
-    if (myProject.item(i) instanceof FolderItem && myProject.item(i).name == folderName) {
+    if (
+      myProject.item(i) instanceof FolderItem &&
+      myProject.item(i).name == folderName
+    ) {
       return myProject.item(i);
     }
   }
@@ -549,7 +590,7 @@ function getFolderByName(folderName) {
 }
 
 // ****** SETTINGS ******
-const sectionName = 'Datamosh2';
+const sectionName = "Datamosh2";
 
 function saveSettings(data) {
   var settingName = data.settingName;
@@ -557,15 +598,19 @@ function saveSettings(data) {
   var value = JSON.stringify(data.value);
   app.settings.saveSetting(sectionName, settingName, value);
   app.preferences.saveToDisk();
-  return 'Success';
+  return "Success";
 }
+
 function getSettings(data) {
   var settingName = data.settingName;
   var setting = app.settings.getSetting(sectionName, settingName);
   return setting;
 }
+
 function haveSettings(data) {
   var settingName = data.settingName;
   var exists = app.settings.haveSetting(sectionName, settingName);
-  return JSON.stringify({ exists: exists });
+  return JSON.stringify({
+    exists: exists,
+  });
 }

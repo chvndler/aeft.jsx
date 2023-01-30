@@ -1,5 +1,5 @@
 /**
- * @title Interval by AtelierDesign
+ * @title Interval.
  * @version 1.0
  * @author Chandler Chappell <chan@ady.world>
  *
@@ -20,22 +20,15 @@
  * All Rights Reserved.
  **/
 
-//DIRECTORY
 var comp;
 
-//var folder;
 var mainLayer, layerLength, assetsFolder;
 
 function grainLevelChange(value) {
-  //OK //default 0
   for (i = 1; i < comp.numLayers; i++) {
-    if (comp.layer(i).name == '03-GRAIN.mp4') {
+    if (comp.layer(i).name == "03-GRAIN.mp4") {
       var effect = comp.layer(i);
-      effect
-        .property('ADBE Effect Parade')
-        .property(1)
-        .property('ADBE Brightness & Contrast 2-0002')
-        .setValue(value);
+      effect.property("ADBE Effect Parade").property(1).property("ADBE Brightness & Contrast 2-0002").setValue(value);
     }
   }
 }
@@ -43,20 +36,16 @@ function grainLevelChange(value) {
 function blooomAmoutChange(value) {
   //OK//default 44
   for (i = 1; i < comp.numLayers; i++) {
-    if (comp.layer(i).name == 'RED & BLUR') {
+    if (comp.layer(i).name == "RED & BLUR") {
       var effect = comp.layer(i);
-      effect
-        .property('ADBE Effect Parade')
-        .property(2)
-        .property('ADBE Gaussian Blur 2-0001')
-        .setValue(value);
+      effect.property("ADBE Effect Parade").property(2).property("ADBE Gaussian Blur 2-0001").setValue(value);
     }
   }
 }
 
 function selectedLayer() {
   if (app.project.activeItem == null) {
-    return '';
+    return "";
   } else {
     //After Validating, running Every functions.
     comp = app.project.activeItem;
@@ -70,16 +59,16 @@ function test(txt) {
 
 function applyClick(dir) {
   if (app.project.activeItem == null) {
-    alert('Please, select a composition.');
+    alert("Please, select a composition.");
     return null;
   }
   comp = app.project.activeItem;
 
   if (comp.selectedLayers.length < 1) {
-    alert('Please, select a layer in a composition.');
+    alert("Please, select a layer in a composition.");
     return null;
   } else if (comp.selectedLayers.length > 1) {
-    alert('Please, select only 1 layer in your composition.');
+    alert("Please, select only 1 layer in your composition.");
     return null;
   } else {
     //After Validating, running Every functions.
@@ -89,7 +78,7 @@ function applyClick(dir) {
 
     //Set files Directory
     var a = dir;
-    a += '/MOV_FILES';
+    a += "/MOV_FILES";
     var str = a.substring(1);
 
     var thisFile = new File(str);
@@ -98,10 +87,10 @@ function applyClick(dir) {
     var files = folder.getFiles();
 
     //set Comp/Layer
-    comp.name = 'ADY™ _ Composition';
+    comp.name = "ADY™ _ Composition";
     mainLayer = comp.selectedLayers[0];
 
-    app.beginUndoGroup('ADY01');
+    app.beginUndoGroup("ADY01");
 
     layerLength = mainLayer.outPoint;
     duplicateLayer();
@@ -113,23 +102,23 @@ function applyClick(dir) {
 
     app.endUndoGroup();
 
-    return 'ok';
+    return "ok";
   }
 }
 
 function submitClick(val) {
-  app.beginUndoGroup('Precompile');
+  app.beginUndoGroup("Precompile");
   precompileList(val);
   app.endUndoGroup();
 }
 
 function togglePerforation(isToggle) {
   for (i = 1; i < comp.numLayers; i++) {
-    if (comp.layer(i).name == '08-SQUARE_OVERLAY.mp4') {
-      if (isToggle == 'true') {
+    if (comp.layer(i).name == "08-SQUARE_OVERLAY.mp4") {
+      if (isToggle == "true") {
         comp.layer(i).enabled = true;
       }
-      if (isToggle == 'false') {
+      if (isToggle == "false") {
         comp.layer(i).enabled = false;
       }
       return;
@@ -139,11 +128,11 @@ function togglePerforation(isToggle) {
 
 function toggleFilmBurns(isToggle) {
   for (i = 1; i < comp.numLayers; i++) {
-    if (comp.layer(i).name == '06-FILM_BURNS.mov') {
-      if (isToggle == 'true') {
+    if (comp.layer(i).name == "06-FILM_BURNS.mov") {
+      if (isToggle == "true") {
         comp.layer(i).enabled = true;
       }
-      if (isToggle == 'false') {
+      if (isToggle == "false") {
         comp.layer(i).enabled = false;
       }
       return;
@@ -157,23 +146,23 @@ function remove() {
 }
 
 function deleteFiles() {
-  app.beginUndoGroup('Removing Layers');
+  app.beginUndoGroup("Removing Layers");
   // precompileList (indexList);
 
   var list = [
-    '01-SCRATCHES.mp4',
-    '02-GAMMA.mp4',
-    '03-GRAIN.mp4',
-    '04-EDGES.mp4',
-    '05-HORIZONTAL_BAR.mov',
-    '06-FILM_BURNS.mov',
-    '07-FRAME_OVERLAY.mp4',
-    '08-SQUARE_OVERLAY.mp4',
-    '09-DIRTY_EDGES.mov',
-    'TRANSFORM',
-    'RED & BLUR',
-    'COLOR GLOW',
-    'FLICKER',
+    "01-SCRATCHES.mp4",
+    "02-GAMMA.mp4",
+    "03-GRAIN.mp4",
+    "04-EDGES.mp4",
+    "05-HORIZONTAL_BAR.mov",
+    "06-FILM_BURNS.mov",
+    "07-FRAME_OVERLAY.mp4",
+    "08-SQUARE_OVERLAY.mp4",
+    "09-DIRTY_EDGES.mov",
+    "TRANSFORM",
+    "RED & BLUR",
+    "COLOR GLOW",
+    "FLICKER",
   ];
   //remove from layers by altering
   var k, l, m;
@@ -181,7 +170,7 @@ function deleteFiles() {
     for (l = 1; l < app.project.numItems + 1; l++) {
       if (list[k] == app.project.item(l).name) {
         app.project.item(l).remove();
-      } else if (app.project.item(l).name == 'ADY™-Assets') {
+      } else if (app.project.item(l).name == "ADY™-Assets") {
         app.project.item(l).remove();
       }
     }
@@ -189,9 +178,9 @@ function deleteFiles() {
 
   for (m = 1; m < comp.numLayers; m++) {
     //alert(comp.layer(m).name);
-    if (comp.layer(m).name == 'Bot clip') {
+    if (comp.layer(m).name == "Bot clip") {
       comp.layer(m).remove();
-    } else if (comp.layer(m).name == 'Top clip') {
+    } else if (comp.layer(m).name == "Top clip") {
       comp.layer(m).remove();
     }
   }
@@ -206,22 +195,22 @@ function duplicateLayer() {
 
   var pos = mainLayer.transform.position.value;
   var layerTop = mainLayer.duplicate();
-  layerTop.name = 'Top clip';
+  layerTop.name = "Top clip";
   layerTop.audioEnabled = false;
   layerTop.transform.position.setValue(pos + [0, height]);
-  var topBlur = layerTop.property('ADBE Effect Parade').addProperty('ADBE Gaussian Blur 2');
-  topBlur.name = 'GAUSSIAN BLUR';
-  topBlur.property('ADBE Gaussian Blur 2-0001').setValue(88);
-  topBlur.property('ADBE Gaussian Blur 2-0002').setValue(3);
+  var topBlur = layerTop.property("ADBE Effect Parade").addProperty("ADBE Gaussian Blur 2");
+  topBlur.name = "GAUSSIAN BLUR";
+  topBlur.property("ADBE Gaussian Blur 2-0001").setValue(88);
+  topBlur.property("ADBE Gaussian Blur 2-0002").setValue(3);
 
   var layerBot = mainLayer.duplicate();
-  layerBot.name = 'Bot clip';
+  layerBot.name = "Bot clip";
   layerBot.transform.position.setValue(pos + [0, height2]);
   layerBot.audioEnabled = false;
-  var botBlur = layerBot.property('ADBE Effect Parade').addProperty('ADBE Gaussian Blur 2');
-  botBlur.name = 'GAUSSIAN BLUR';
-  botBlur.property('ADBE Gaussian Blur 2-0001').setValue(88);
-  botBlur.property('ADBE Gaussian Blur 2-0002').setValue(3);
+  var botBlur = layerBot.property("ADBE Effect Parade").addProperty("ADBE Gaussian Blur 2");
+  botBlur.name = "GAUSSIAN BLUR";
+  botBlur.property("ADBE Gaussian Blur 2-0001").setValue(88);
+  botBlur.property("ADBE Gaussian Blur 2-0002").setValue(3);
 }
 
 function importToComp() {
@@ -234,84 +223,60 @@ function importToComp() {
   try {
     //                                EDIT HERE----------------
     var transformAV_properties = {
-      name: 'TRANSFORM',
-      typeName: 'Footage',
+      name: "TRANSFORM",
+      typeName: "Footage",
       label: 1,
       pixelAspect: 1,
       mainSource: { color: [1, 1, 1] },
     };
     var transformAV = findProjectItem(assetsFolder, false, transformAV_properties);
     if (transformAV === null) {
-      var calqueDeffets1_tempSolid = comp.layers.addSolid(
-        col,
-        transformAV_properties.name,
-        compWidth,
-        compHeight,
-        px,
-      );
+      var calqueDeffets1_tempSolid = comp.layers.addSolid(col, transformAV_properties.name, compWidth, compHeight, px);
       var transformAV = calqueDeffets1_tempSolid.source;
       transformAV.parentFolder = assetsFolder;
       calqueDeffets1_tempSolid.remove();
     }
     // CREATE AVLAYERS to add on the comp
     var flickerAV_properties = {
-      name: 'FLICKER',
-      typeName: 'Footage',
+      name: "FLICKER",
+      typeName: "Footage",
       label: 1,
       pixelAspect: 1,
       mainSource: { color: [1, 1, 1] },
     };
     var flickerAV = findProjectItem(assetsFolder, false, flickerAV_properties);
     if (flickerAV === null) {
-      var calqueDeffets1_tempSolid = comp.layers.addSolid(
-        col,
-        flickerAV_properties.name,
-        compWidth,
-        compHeight,
-        px,
-      );
+      var calqueDeffets1_tempSolid = comp.layers.addSolid(col, flickerAV_properties.name, compWidth, compHeight, px);
       flickerAV = calqueDeffets1_tempSolid.source;
       flickerAV.parentFolder = assetsFolder;
       calqueDeffets1_tempSolid.remove();
     }
 
     var colorGlowAV_properties = {
-      name: 'COLOR GLOW',
-      typeName: 'Footage',
+      name: "COLOR GLOW",
+      typeName: "Footage",
       label: 1,
       pixelAspect: 1,
       mainSource: { color: [1, 1, 1] },
     };
     var colorGlowAV = findProjectItem(assetsFolder, false, colorGlowAV_properties);
     if (colorGlowAV === null) {
-      var tempSolid = comp.layers.addSolid(
-        col,
-        colorGlowAV_properties.name,
-        compWidth,
-        compHeight,
-        px,
-      );
+      var tempSolid = comp.layers.addSolid(col, colorGlowAV_properties.name, compWidth, compHeight, px);
       colorGlowAV = tempSolid.source;
       colorGlowAV.parentFolder = assetsFolder;
       tempSolid.remove();
     }
 
     var redBlurAV_properties = {
-      name: 'RED & BLUR',
-      typeName: 'Footage',
+      name: "RED & BLUR",
+      typeName: "Footage",
       label: 1,
       pixelAspect: 1,
       mainSource: { color: [1, 1, 1] },
     };
     var redBlurAV = findProjectItem(app.project.rootFolder, false, redBlurAV_properties);
     if (redBlurAV === null) {
-      var tempSolid = comp.layers.addSolid(
-        col,
-        redBlurAV_properties.name,
-        compWidth,
-        compHeight,
-        px,
-      );
+      var tempSolid = comp.layers.addSolid(col, redBlurAV_properties.name, compWidth, compHeight, px);
       redBlurAV = tempSolid.source;
       redBlurAV.parentFolder = assetsFolder;
       tempSolid.remove();
@@ -322,148 +287,89 @@ function importToComp() {
 
     //Add existing Solid Layer Vertical Flick effect   EDIT HERE----------------
     var transform = comp.layers.add(transformAV);
-    transform.name = 'TRANSFORM';
+    transform.name = "TRANSFORM";
 
     transform.outPoint = layerLength;
     transform.adjustmentLayer = true;
     transform.selected = false;
     // Apply expressions to properties
     try {
-      transform.property('ADBE Effect Parade').addProperty('ADBE Geometry2');
-      transform.property('ADBE Effect Parade').property(1).property('Position').expression =
-        '([position[0],wiggle(44,22)[1]])';
+      transform.property("ADBE Effect Parade").addProperty("ADBE Geometry2");
+      transform.property("ADBE Effect Parade").property(1).property("Position").expression =
+        "([position[0],wiggle(44,22)[1]])";
     } catch (err) {}
 
     // Add existing Solid Layer "Calque d'effets 5", varName "flickerAV";
     var flicker = comp.layers.add(flickerAV);
-    flicker.name = 'FLICKER';
+    flicker.name = "FLICKER";
     //flicker.label = 5;
     flicker.outPoint = layerLength;
     flicker.adjustmentLayer = true;
-    flicker.property('ADBE Effect Parade').addProperty('ADBE Exposure2');
-    flicker.property('ADBE Effect Parade').property(1).name = 'Exposure';
-    flicker.property('ADBE Effect Parade').property(1).property('ADBE Exposure2-0003').setValue(0);
+    flicker.property("ADBE Effect Parade").addProperty("ADBE Exposure2");
+    flicker.property("ADBE Effect Parade").property(1).name = "Exposure";
+    flicker.property("ADBE Effect Parade").property(1).property("ADBE Exposure2-0003").setValue(0);
     flicker.selected = false;
     // Apply expressions to properties
     try {
-      flicker
-        .property('ADBE Effect Parade')
-        .property(1)
-        .property('ADBE Exposure2-0003').expression = 'wiggle(10,0.1)';
+      flicker.property("ADBE Effect Parade").property(1).property("ADBE Exposure2-0003").expression = "wiggle(10,0.1)";
     } catch (err) {}
 
     // Add existing Solid Layer "Calque d'effets 3", varName "colorGlowAV";
     var colorGlow = comp.layers.add(colorGlowAV);
-    colorGlow.name = 'COLOR GLOW';
+    colorGlow.name = "COLOR GLOW";
     //colorGlow.label = 5;
     colorGlow.outPoint = layerLength;
     colorGlow.adjustmentLayer = true;
-    if (colorGlow.property('ADBE Effect Parade').canAddProperty('ADBE Lumetri')) {
-      colorGlow.property('ADBE Effect Parade').addProperty('ADBE Lumetri');
+    if (colorGlow.property("ADBE Effect Parade").canAddProperty("ADBE Lumetri")) {
+      colorGlow.property("ADBE Effect Parade").addProperty("ADBE Lumetri");
     } else {
       return alert(
         'Cannot apply "LUMETRI" (ADBE Lumetri) effect to layer "' +
           colorGlow.name +
-          '" because you don\'t have this effect installed on your system.',
+          "\" because you don't have this effect installed on your system."
       );
     }
-    colorGlow.property('ADBE Effect Parade').property(1).name = 'LUMETRI';
-    colorGlow
-      .property('ADBE Effect Parade')
-      .property(1)
-      .property('ADBE Lumetri-0063')
-      .setValue(100);
-    colorGlow
-      .property('ADBE Effect Parade')
-      .property(1)
-      .property('ADBE Lumetri-0012')
-      .setValue(-50);
-    colorGlow
-      .property('ADBE Effect Parade')
-      .property(1)
-      .property('ADBE Lumetri-0013')
-      .setValue(-36);
-    colorGlow.property('ADBE Effect Parade').property(1).property('ADBE Lumetri-0015').setValue(22);
-    colorGlow
-      .property('ADBE Effect Parade')
-      .property(1)
-      .property('ADBE Lumetri-0065')
-      .setValue(100);
-    colorGlow
-      .property('ADBE Effect Parade')
-      .property(1)
-      .property('ADBE Lumetri-0066')
-      .setValue(100);
-    colorGlow.property('ADBE Effect Parade').property(1).property('ADBE Lumetri-0097').setValue(1);
-    colorGlow.property('ADBE Effect Parade').addProperty('ADBE Glo2');
-    colorGlow.property('ADBE Effect Parade').property(2).name = 'GLOW';
-    colorGlow
-      .property('ADBE Effect Parade')
-      .property(2)
-      .property('ADBE Glo2-0002')
-      .setValue(112.199996948242);
-    colorGlow.property('ADBE Effect Parade').property(2).property('ADBE Glo2-0003').setValue(300);
-    colorGlow
-      .property('ADBE Effect Parade')
-      .property(2)
-      .property('ADBE Glo2-0004')
-      .setValue(0.10000000149012);
+    colorGlow.property("ADBE Effect Parade").property(1).name = "LUMETRI";
+    colorGlow.property("ADBE Effect Parade").property(1).property("ADBE Lumetri-0063").setValue(100);
+    colorGlow.property("ADBE Effect Parade").property(1).property("ADBE Lumetri-0012").setValue(-50);
+    colorGlow.property("ADBE Effect Parade").property(1).property("ADBE Lumetri-0013").setValue(-36);
+    colorGlow.property("ADBE Effect Parade").property(1).property("ADBE Lumetri-0015").setValue(22);
+    colorGlow.property("ADBE Effect Parade").property(1).property("ADBE Lumetri-0065").setValue(100);
+    colorGlow.property("ADBE Effect Parade").property(1).property("ADBE Lumetri-0066").setValue(100);
+    colorGlow.property("ADBE Effect Parade").property(1).property("ADBE Lumetri-0097").setValue(1);
+    colorGlow.property("ADBE Effect Parade").addProperty("ADBE Glo2");
+    colorGlow.property("ADBE Effect Parade").property(2).name = "GLOW";
+    colorGlow.property("ADBE Effect Parade").property(2).property("ADBE Glo2-0002").setValue(112.199996948242);
+    colorGlow.property("ADBE Effect Parade").property(2).property("ADBE Glo2-0003").setValue(300);
+    colorGlow.property("ADBE Effect Parade").property(2).property("ADBE Glo2-0004").setValue(0.10000000149012);
     colorGlow.selected = false;
 
     // Add existing Solid Layer "Calque d'effets 1", varName "redBlurAV";
     redBlur = comp.layers.add(redBlurAV);
-    redBlur.name = 'RED & BLUR';
+    redBlur.name = "RED & BLUR";
     //redBlur.label = 5;
     redBlur.outPoint = layerLength;
     redBlur.adjustmentLayer = true;
     redBlur.blendingMode = BlendingMode.LIGHTEN;
-    redBlur.property('ADBE Effect Parade').addProperty('ADBE Channel Blur');
-    redBlur.property('ADBE Effect Parade').property(1).name = 'CHANNEL BLUR';
-    redBlur
-      .property('ADBE Effect Parade')
-      .property(1)
-      .property('ADBE Channel Blur-0001')
-      .setValue(100);
-    redBlur
-      .property('ADBE Effect Parade')
-      .property(1)
-      .property('ADBE Channel Blur-0002')
-      .setValue(22);
-    redBlur
-      .property('ADBE Effect Parade')
-      .property(1)
-      .property('ADBE Channel Blur-0005')
-      .setValue(1);
-    redBlur
-      .property('ADBE Effect Parade')
-      .property(1)
-      .property('ADBE Channel Blur-0006')
-      .setValue(3);
-    if (redBlur.property('ADBE Effect Parade').canAddProperty('ADBE Gaussian Blur 2')) {
-      redBlur.property('ADBE Effect Parade').addProperty('ADBE Gaussian Blur 2');
+    redBlur.property("ADBE Effect Parade").addProperty("ADBE Channel Blur");
+    redBlur.property("ADBE Effect Parade").property(1).name = "CHANNEL BLUR";
+    redBlur.property("ADBE Effect Parade").property(1).property("ADBE Channel Blur-0001").setValue(100);
+    redBlur.property("ADBE Effect Parade").property(1).property("ADBE Channel Blur-0002").setValue(22);
+    redBlur.property("ADBE Effect Parade").property(1).property("ADBE Channel Blur-0005").setValue(1);
+    redBlur.property("ADBE Effect Parade").property(1).property("ADBE Channel Blur-0006").setValue(3);
+    if (redBlur.property("ADBE Effect Parade").canAddProperty("ADBE Gaussian Blur 2")) {
+      redBlur.property("ADBE Effect Parade").addProperty("ADBE Gaussian Blur 2");
     } else {
       return alert(
         'Cannot apply "GAUSSIAN BLUR" (ADBE Gaussian Blur 2) effect to layer "' +
           redBlur.name +
-          '" because you don\'t have this effect installed on your system.',
+          "\" because you don't have this effect installed on your system."
       );
     }
-    redBlur.property('ADBE Effect Parade').property(2).name = 'GAUSSIAN BLUR';
-    redBlur
-      .property('ADBE Effect Parade')
-      .property(2)
-      .property('ADBE Gaussian Blur 2-0001')
-      .setValue(44);
-    redBlur
-      .property('ADBE Effect Parade')
-      .property(2)
-      .property('ADBE Gaussian Blur 2-0002')
-      .setValue(2);
-    redBlur
-      .property('ADBE Effect Parade')
-      .property(2)
-      .property('ADBE Gaussian Blur 2-0003')
-      .setValue(1);
+    redBlur.property("ADBE Effect Parade").property(2).name = "GAUSSIAN BLUR";
+    redBlur.property("ADBE Effect Parade").property(2).property("ADBE Gaussian Blur 2-0001").setValue(44);
+    redBlur.property("ADBE Effect Parade").property(2).property("ADBE Gaussian Blur 2-0002").setValue(2);
+    redBlur.property("ADBE Effect Parade").property(2).property("ADBE Gaussian Blur 2-0003").setValue(1);
     redBlur.selected = false;
 
     return {
@@ -472,12 +378,12 @@ function importToComp() {
   } catch (e) {
     alert(
       e.toString() +
-        '\nScript File: ' +
-        File.decode(e.fileName).replace(/^.*[\|\/]/, '') +
-        '\nFunction: ' +
+        "\nScript File: " +
+        File.decode(e.fileName).replace(/^.*[\|\/]/, "") +
+        "\nFunction: " +
         arguments.callee.name +
-        '\nError on Line: ' +
-        e.line.toString(),
+        "\nError on Line: " +
+        e.line.toString()
     );
   }
 }
@@ -514,7 +420,7 @@ function importFiles(fileList) {
       xscale = (w / vw) * 100;
       yscale = (h / vh) * 100;
       var footage = comp.layers.add(importFootage); // Add footage to your composition
-      footage.property('Scale').setValue([xscale, yscale]);
+      footage.property("Scale").setValue([xscale, yscale]);
       footage.moveToBeginning();
       footage.blendingMode = footageBlend[i];
       //Set the duration
@@ -525,50 +431,38 @@ function importFiles(fileList) {
       var length = layerLength.toFixed(2);
       var duration = footage.source.duration.toFixed(2);
       footage.outPoint = length;
-      footage.property('timeRemap').addKey(footage.inPoint);
-      footage.property('timeRemap').addKey(duration);
+      footage.property("timeRemap").addKey(footage.inPoint);
+      footage.property("timeRemap").addKey(duration);
       importFootage.parentFolder = assetsFolder;
       switch (importFootage.name) {
-        case '02-GAMMA.mp4':
+        case "02-GAMMA.mp4":
           footage.opacity.setValue(22);
-          footage.property('ADBE Effect Parade').addProperty('ADBE Exposure2');
+          footage.property("ADBE Effect Parade").addProperty("ADBE Exposure2");
           break;
-        case '03-GRAIN.mp4':
-          footage.property('ADBE Effect Parade').addProperty('ADBE Brightness & Contrast 2');
+        case "03-GRAIN.mp4":
+          footage.property("ADBE Effect Parade").addProperty("ADBE Brightness & Contrast 2");
           break;
-        case '05-HORIZONTAL_BAR.mov':
-          footage.property('ADBE Effect Parade').addProperty('ADBE Exposure2');
-          footage.property('ADBE Effect Parade').property(1).name = 'Exposure';
-          footage
-            .property('ADBE Effect Parade')
-            .property(1)
-            .property('ADBE Exposure2-0003')
-            .setValue(1.6);
+        case "05-HORIZONTAL_BAR.mov":
+          footage.property("ADBE Effect Parade").addProperty("ADBE Exposure2");
+          footage.property("ADBE Effect Parade").property(1).name = "Exposure";
+          footage.property("ADBE Effect Parade").property(1).property("ADBE Exposure2-0003").setValue(1.6);
 
-          footage.property('ADBE Effect Parade').addProperty('ADBE Glo2');
-          footage.property('ADBE Effect Parade').property(2).name = 'GLOW';
-          footage
-            .property('ADBE Effect Parade')
-            .property(2)
-            .property('ADBE Glo2-0002')
-            .setValue(81.6);
-          footage.property('ADBE Effect Parade').property(2).property('ADBE Glo2-0003').setValue(0);
-          footage.property('ADBE Effect Parade').property(2).property('ADBE Glo2-0004').setValue(0);
+          footage.property("ADBE Effect Parade").addProperty("ADBE Glo2");
+          footage.property("ADBE Effect Parade").property(2).name = "GLOW";
+          footage.property("ADBE Effect Parade").property(2).property("ADBE Glo2-0002").setValue(81.6);
+          footage.property("ADBE Effect Parade").property(2).property("ADBE Glo2-0003").setValue(0);
+          footage.property("ADBE Effect Parade").property(2).property("ADBE Glo2-0004").setValue(0);
           footage.selected = false;
 
           break;
-        case '06-FILM_BURNS.mov':
+        case "06-FILM_BURNS.mov":
           footage.enabled = false;
           break;
 
-        case '09-DIRTY_EDGES.mov':
-          footage.property('ADBE Effect Parade').addProperty('ADBE Gaussian Blur 2');
-          footage.property('ADBE Effect Parade').property(1).name = 'GAUSSIAN BLUR';
-          footage
-            .property('ADBE Effect Parade')
-            .property(1)
-            .property('ADBE Gaussian Blur 2-0001')
-            .setValue(4);
+        case "09-DIRTY_EDGES.mov":
+          footage.property("ADBE Effect Parade").addProperty("ADBE Gaussian Blur 2");
+          footage.property("ADBE Effect Parade").property(1).name = "GAUSSIAN BLUR";
+          footage.property("ADBE Effect Parade").property(1).property("ADBE Gaussian Blur 2-0001").setValue(4);
           footage.selected = false;
           break;
       }
@@ -578,21 +472,21 @@ function importFiles(fileList) {
 
 function precompileList(layerName) {
   var list = [
-    '01-SCRATCHES.mp4',
-    '02-GAMMA.mp4',
-    '03-GRAIN.mp4',
-    '04-EDGES.mp4',
-    '05-HORIZONTAL_BAR.mov',
-    '06-FILM_BURNS.mov',
-    '07-FRAME_OVERLAY.mp4',
-    '08-SQUARE_OVERLAY.mp4',
-    '09-DIRTY_EDGES.mov',
-    'TRANSFORM',
-    'RED & BLUR',
-    'COLOR GLOW',
-    'FLICKER',
-    'Bot clip',
-    'Top clip',
+    "01-SCRATCHES.mp4",
+    "02-GAMMA.mp4",
+    "03-GRAIN.mp4",
+    "04-EDGES.mp4",
+    "05-HORIZONTAL_BAR.mov",
+    "06-FILM_BURNS.mov",
+    "07-FRAME_OVERLAY.mp4",
+    "08-SQUARE_OVERLAY.mp4",
+    "09-DIRTY_EDGES.mov",
+    "TRANSFORM",
+    "RED & BLUR",
+    "COLOR GLOW",
+    "FLICKER",
+    "Bot clip",
+    "Top clip",
   ];
 
   list.push(layerName);
@@ -613,7 +507,7 @@ function precompileList(layerName) {
     }
   }
 
-  comp.layers.precompose(newList, 'ADY01', true);
+  comp.layers.precompose(newList, "ADY01", true);
   /*
      var tempNullComp = app.project.items.addComp("tempNullComp", 100, 100, 1, 1, 24);
      var tempNullLayer = tempNullComp.layers.addNull();
@@ -626,10 +520,15 @@ function precompileList(layerName) {
 }
 
 function createFolder() {
-  var folder_properties = { name: 'ADY™ Assets', typeName: 'Folder', label: 2, comment: '' };
+  var folder_properties = {
+    name: "ADY™ Assets",
+    typeName: "Folder",
+    label: 2,
+    comment: "",
+  };
   assetsFolder = findProjectItem(app.project.rootFolder, false, folder_properties);
   if (assetsFolder === null) {
-    assetsFolder = app.project.items.addFolder('ADY™-Assets');
+    assetsFolder = app.project.items.addFolder("ADY™-Assets");
   }
 }
 
@@ -659,7 +558,7 @@ function findProjectItem(searchFolder, recursion, userData) {
 }
 
 function propertiesMatch(projectItem, userData) {
-  if (typeof userData === 'undefined') return true;
+  if (typeof userData === "undefined") return true;
 
   for (var propertyName in userData) {
     if (!userData.hasOwnProperty(propertyName)) continue;
@@ -670,10 +569,7 @@ function propertiesMatch(projectItem, userData) {
       if (userData[propertyName].toString() !== projectItem[propertyName].toString()) {
         return false;
       }
-    } else if (
-      typeof userData[propertyName] === 'object' &&
-      typeof projectItem[propertyName] === 'object'
-    ) {
+    } else if (typeof userData[propertyName] === "object" && typeof projectItem[propertyName] === "object") {
       if (!propertiesMatch(projectItem[propertyName], userData[propertyName])) {
         return false;
       }
@@ -684,5 +580,5 @@ function propertiesMatch(projectItem, userData) {
   return true;
 }
 function isArray(object) {
-  return Object.prototype.toString.apply(object) === '[object Array]';
+  return Object.prototype.toString.apply(object) === "[object Array]";
 }
