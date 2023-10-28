@@ -11,13 +11,13 @@
         "type": "git",
         "url": "git+https://github.com/chvndler/aeft.jsx.git"
     },
-    "author": "chvndler <chan@ady.world>",
+    "author": "chvndler <chan@atlrdsgn.com>",
     "license": "ISC",
     "bugs": {
         "url": "https://github.com/chvndler/aeft.jsx/issues"
     },
     "homepage": "https://github.com/chvndler/aeft.jsx#readme",
     "dependencies": {
-        "prettier": "^2.5.1"
+        "prettier": "^3.0.3"
     }
 }
