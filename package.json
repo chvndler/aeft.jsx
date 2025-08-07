@@ -1,23 +1,24 @@
 {
-    "name": "aeft.jsx",
-    "version": "1.0.0",
-    "description": "Public Repo of Adobe® After Effects scripts, snippets, style, and more.",
-    "main": "index.html",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "pretty": "prettier --write \"**/*.jsx\""
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/chvndler/aeft.jsx.git"
-    },
-    "author": "chvndler <chan@atlrdsgn.com>",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/chvndler/aeft.jsx/issues"
-    },
-    "homepage": "https://github.com/chvndler/aeft.jsx#readme",
-    "dependencies": {
-        "prettier": "^3.0.3"
-    }
+  "name": "aeft.jsx",
+  "version": "1.0.0",
+  "description": "Public Repo of Adobe® After Effects scripts, snippets, style, and more.",
+  "main": "index.html",
+  "scripts": {
+    "dev": "echo 'Ready to build or test expressions!'",
+    "pretty": "prettier --write \"**/*.{js,jsx}\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chvndler/aeft.jsx.git"
+  },
+  "author": "chvndler <chan@atlrdsgn.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chvndler/aeft.jsx/issues"
+  },
+  "homepage": "https://github.com/chvndler/aeft.jsx#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
 }
