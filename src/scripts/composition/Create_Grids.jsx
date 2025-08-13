@@ -69,9 +69,7 @@
 
     function BuildAndShowUI(thisObj) {
       var my_palette =
-        thisObj instanceof Panel
-          ? thisObj
-          : new Window('palette', scriptName, undefined, { resizeable: true });
+        thisObj instanceof Panel ? thisObj : new Window('palette', scriptName, undefined, { resizeable: true });
       if (my_palette != null) {
         var res =
           "group { \

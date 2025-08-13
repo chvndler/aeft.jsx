@@ -56,12 +56,12 @@ var aeq = (function () {
     return result;
   };
 
-  aeq.version = "0.6.0";
+  aeq.version = '0.6.0';
 
   aeq.thisObj = this;
 
   /* eslint-env commonjs */
-  if (typeof module === "object") {
+  if (typeof module === 'object') {
     module.exports = aeq;
   }
 
@@ -81,7 +81,7 @@ var aeq = (function () {
    * }
    */
   aeq.setDefault = function (value, defaultVal) {
-    return typeof value == "undefined" ? defaultVal : value;
+    return typeof value == 'undefined' ? defaultVal : value;
   };
 
   var setDefault = aeq.setDefault;
@@ -125,7 +125,7 @@ var aeq = (function () {
       deep = false;
 
     // Handle a deep copy situation
-    if (typeof target === "boolean") {
+    if (typeof target === 'boolean') {
       deep = target;
 
       // Skip the boolean and the target
@@ -134,7 +134,7 @@ var aeq = (function () {
     }
 
     // Handle case when target is a string or something (possible in deep copy)
-    if (typeof target !== "object" && !aeq.isFunction(target)) {
+    if (typeof target !== 'object' && !aeq.isFunction(target)) {
       target = {};
     }
 
@@ -215,7 +215,7 @@ var aeq = (function () {
    */
   aeq.forEach = function (obj, callback, fromIndex) {
     var length, i;
-    if (obj && Object.prototype.toString.call(obj) === "[object Array]") {
+    if (obj && Object.prototype.toString.call(obj) === '[object Array]') {
       length = obj.length;
       i = fromIndex === undefined ? 0 : fromIndex;
       for (; i < length; i++) {
@@ -249,7 +249,7 @@ var aeq = (function () {
     var filteredArr = [],
       length,
       i;
-    if (obj && Object.prototype.toString.call(obj) === "[object Array]") {
+    if (obj && Object.prototype.toString.call(obj) === '[object Array]') {
       length = obj.length;
       i = 0;
       for (; i < length; i++) {
@@ -391,7 +391,7 @@ var aeq = (function () {
 
       // Throw error if only array is given
       if (arguments.length === 1) {
-        throw new Error("Only one argument given to attr, must be 2 or 3");
+        throw new Error('Only one argument given to attr, must be 2 or 3');
 
         // Get value of attributeName for first object in the array if only attributeName is given
       } else if (arguments.length === 2) {
@@ -418,8 +418,8 @@ var aeq = (function () {
 
     var attr = {
       setters: {
-        "[object Property]": {
-          value: "setValue",
+        '[object Property]': {
+          value: 'setValue',
         },
       },
     };
@@ -588,7 +588,7 @@ var aeq = (function () {
        * @return {aeq.arrayEx}         Layer objects in the comp(s)
        */
       getLayers: function (comps) {
-        aeq.assertIsNotNull(comps, "comps is null");
+        aeq.assertIsNotNull(comps, 'comps is null');
 
         var arr = [];
 
@@ -681,7 +681,7 @@ var aeq = (function () {
        * @return {aeq.arrayEx} Array of Property objects
        */
       getProperties: function (layers, options) {
-        aeq.assertIsNotNull(layers, "layer is null");
+        aeq.assertIsNotNull(layers, 'layer is null');
 
         options = setDefault(options, { separate: true });
 
@@ -753,7 +753,7 @@ var aeq = (function () {
        * @return {aeq.arrayEx}     Array of PropertyGroup objects
        */
       getEffects: function (layers) {
-        aeq.assertIsNotNull(layers, "layers is null");
+        aeq.assertIsNotNull(layers, 'layers is null');
 
         if (aeq.isLayer(layers)) {
           layers = [layers];
@@ -764,7 +764,7 @@ var aeq = (function () {
         var effects, effectslen;
 
         for (var l = 0; l < len; l++) {
-          effects = layers[l].property("ADBE Effect Parade");
+          effects = layers[l].property('ADBE Effect Parade');
           if (effects === null) {
             continue;
           }
@@ -795,7 +795,7 @@ var aeq = (function () {
         }
 
         if (aeq.isLayer(obj)) {
-          return obj.property("ADBE Marker");
+          return obj.property('ADBE Marker');
         }
 
         if (aeq.isComp(obj) && aeq.app.version >= 14.0) {
@@ -932,10 +932,10 @@ var aeq = (function () {
 
     function normalizeProperty(propertyParent, property) {
       switch (property.name) {
-        case "X Position":
-        case "Y Position":
-        case "Z Position":
-          property = propertyParent.property("Position");
+        case 'X Position':
+        case 'Y Position':
+        case 'Z Position':
+          property = propertyParent.property('Position');
           property.dimensionsSeparated = true;
           return property.propertyGroup().property(property.name);
 
@@ -1039,7 +1039,7 @@ var aeq = (function () {
       forEachEffect: function (obj, callback) {
         var i, length, effects;
         if (aeq.isLayer(obj)) {
-          effects = obj.property("ADBE Effect Parade");
+          effects = obj.property('ADBE Effect Parade');
           length = effects.numProperties;
 
           for (i = 1; i <= length; i++) {
@@ -1274,87 +1274,87 @@ var aeq = (function () {
         var unshifted = false;
 
         switch (part.type) {
-          case "activecomp":
+          case 'activecomp':
             results = filterResults(aeq.arrayEx([aeq.getActiveComposition()]));
-            results.type = "comp";
+            results.type = 'comp';
             break;
-          case "composition":
-          case "comp":
+          case 'composition':
+          case 'comp':
             results = filterResults(aeq.getCompositions());
-            results.type = "comp";
+            results.type = 'comp';
             break;
 
-          case "layer":
-            if (results.type === "comp" || aeq.isComp(results[0])) {
+          case 'layer':
+            if (results.type === 'comp' || aeq.isComp(results[0])) {
               results = filterResults(aeq.getLayers(results));
-              results.type = "layer";
-            } else if (results.type !== "comp") {
-              parts.unshift({ type: "comp" });
+              results.type = 'layer';
+            } else if (results.type !== 'comp') {
+              parts.unshift({ type: 'comp' });
               unshifted = true;
             }
             break;
 
-          case "propertygroup":
-          case "propgrp":
-          case "propgroup":
+          case 'propertygroup':
+          case 'propgrp':
+          case 'propgroup':
             if (
-              results.type === "layer" ||
-              results.type === "propertygroup" ||
+              results.type === 'layer' ||
+              results.type === 'propertygroup' ||
               aeq.isLayer(results[0]) ||
               aeq.isPropertyGroup(results[0])
             ) {
               results = filterResults(aeq.getProperties(results, { separate: false, groups: true, props: false }));
-              results.type = "propertygroup";
-            } else if (results.type !== "layer") {
-              parts.unshift({ type: "layer" });
+              results.type = 'propertygroup';
+            } else if (results.type !== 'layer') {
+              parts.unshift({ type: 'layer' });
               unshifted = true;
             }
             break;
 
-          case "property":
-          case "prop":
+          case 'property':
+          case 'prop':
             if (
-              results.type === "layer" ||
-              results.type === "propertygroup" ||
+              results.type === 'layer' ||
+              results.type === 'propertygroup' ||
               aeq.isLayer(results[0]) ||
               aeq.isPropertyGroup(results[0])
             ) {
               results = filterResults(aeq.getProperties(results, { separate: false }));
-              results.type = "property";
-            } else if (results.type !== "layer") {
-              parts.unshift({ type: "layer" });
+              results.type = 'property';
+            } else if (results.type !== 'layer') {
+              parts.unshift({ type: 'layer' });
               unshifted = true;
             }
             break;
 
-          case "effect":
-            if (results.type === "layer" || aeq.isLayer(results[0])) {
+          case 'effect':
+            if (results.type === 'layer' || aeq.isLayer(results[0])) {
               results = filterResults(aeq.getEffects(results));
-              results.type = "effect";
-            } else if (results.type !== "layer") {
-              parts.unshift({ type: "layer" });
+              results.type = 'effect';
+            } else if (results.type !== 'layer') {
+              parts.unshift({ type: 'layer' });
               unshifted = true;
             }
             break;
 
-          case "key":
-          case "keys":
-            if (results.type === "property" || aeq.isProperty(results[0])) {
+          case 'key':
+          case 'keys':
+            if (results.type === 'property' || aeq.isProperty(results[0])) {
               results = filterResults(aeq.getKeys(results));
-              results.type = "key";
-            } else if (results.type !== "property") {
-              parts.unshift({ type: "property" });
+              results.type = 'key';
+            } else if (results.type !== 'property') {
+              parts.unshift({ type: 'property' });
               unshifted = true;
             }
             break;
 
-          case "item":
+          case 'item':
             results = filterResults(aeq.getItems());
-            results.type = "item";
+            results.type = 'item';
             break;
 
           default:
-            throw new Error("Unrecognized token " + part.type);
+            throw new Error('Unrecognized token ' + part.type);
         }
         if (!unshifted) {
           parts.shift();
@@ -1386,9 +1386,9 @@ var aeq = (function () {
         for (var i = 0; i < len; i++) {
           pseudo = part.pseudo[i];
 
-          if (pseudo.type === "not" || pseudo.type === "isnot") {
+          if (pseudo.type === 'not' || pseudo.type === 'isnot') {
             ret = hasAllAttributes(obj, pseudo.props, true);
-          } else if (pseudo.type === "is" || pseudo.type === "has") {
+          } else if (pseudo.type === 'is' || pseudo.type === 'has') {
             ret = hasAllAttributes(obj, pseudo.props, false);
           }
 
@@ -1411,7 +1411,7 @@ var aeq = (function () {
         attributeValue = attributes[attribute];
 
         if (!obj.hasOwnProperty(attribute)) {
-          throw new Error("The attribute " + attribute + " does not exist on a " + typeof obj);
+          throw new Error('The attribute ' + attribute + ' does not exist on a ' + typeof obj);
         }
 
         var isSame = compare(attributeValue, obj[attribute]);
@@ -1426,9 +1426,9 @@ var aeq = (function () {
     }
 
     function compare(value, attribute) {
-      if (value.type === "Array") {
+      if (value.type === 'Array') {
         return valueInArray(value, attribute);
-      } else if (value.type === "RegExp") {
+      } else if (value.type === 'RegExp') {
         return value.value.test(attribute);
 
         // For numbers, strings, booleans etc.
@@ -1472,7 +1472,7 @@ var aeq = (function () {
        * @return {Boolean} Whether the value is a boolean
        */
       isBoolean: function (o) {
-        return typeof o === "boolean";
+        return typeof o === 'boolean';
       },
 
       /**
@@ -1483,7 +1483,7 @@ var aeq = (function () {
        * @return {Boolean} Whether the value is a number
        */
       isNumber: function (o) {
-        return typeof o === "number";
+        return typeof o === 'number';
       },
 
       /**
@@ -1494,7 +1494,7 @@ var aeq = (function () {
        * @return {Boolean} Whether the value is a string
        */
       isString: function (o) {
-        return typeof o === "string";
+        return typeof o === 'string';
       },
 
       /**
@@ -1525,11 +1525,11 @@ var aeq = (function () {
         if (obj === undefined || obj === null) {
           return false;
         }
-        if (obj.toString() !== "[object Object]") {
+        if (obj.toString() !== '[object Object]') {
           return false;
         }
 
-        if (obj.constructor && !obj.constructor.prototype.hasOwnProperty("isPrototypeOf")) {
+        if (obj.constructor && !obj.constructor.prototype.hasOwnProperty('isPrototypeOf')) {
           return false;
         }
 
@@ -1793,7 +1793,7 @@ var aeq = (function () {
 
         for (var m in obj) {
           if (obj.hasOwnProperty(m)) {
-            str.push(obj[m].constructor.name + " " + m + "=" + obj[m]);
+            str.push(obj[m].constructor.name + ' ' + m + '=' + obj[m]);
           }
         }
 
@@ -1882,21 +1882,21 @@ var aeq = (function () {
      */
     aeq.error = function (err, args) {
       var callingFunction = /\s*function\s*([^(]*)/i.exec(err.source);
-      callingFunction = callingFunction !== null && callingFunction[1] !== "" ? callingFunction[1] : "anonymous";
+      callingFunction = callingFunction !== null && callingFunction[1] !== '' ? callingFunction[1] : 'anonymous';
 
       alert(
         err.toString() +
-          "\n" +
+          '\n' +
           // eslint says the `\/` is useless, but it useful in estk
           // eslint-disable-next-line no-useless-escape
-          "Script File: " +
-          File.decode(err.fileName).replace(/^.*[\\|\/]/, "") +
+          'Script File: ' +
+          File.decode(err.fileName).replace(/^.*[\\|\/]/, '') +
           // Arguments.callee is the more reliable way of getting the function name
-          "\nFunction: " +
+          '\nFunction: ' +
           (args === undefined ? callingFunction : args.callee.name) +
-          (args === undefined || args.length === 0 ? "" : "\nArguments: " + Array.prototype.toString.call(args)) +
-          "\nError on Line: " +
-          err.line.toString()
+          (args === undefined || args.length === 0 ? '' : '\nArguments: ' + Array.prototype.toString.call(args)) +
+          '\nError on Line: ' +
+          err.line.toString(),
       );
     };
 
@@ -1939,15 +1939,15 @@ var aeq = (function () {
           return false;
         }
         folder = aeq.getFolderObject(folder);
-        extension = setDefault(extension, "");
-        if (extension !== "" && extension.charAt(0) !== ".") {
-          extension = "." + extension;
+        extension = setDefault(extension, '');
+        if (extension !== '' && extension.charAt(0) !== '.') {
+          extension = '.' + extension;
         }
 
         aeq.file.ensureFolderExists(folder);
 
         if (!folder.exists) {
-          throw new Error("Could not create resource folder: " + folder.fsname);
+          throw new Error('Could not create resource folder: ' + folder.fsname);
         }
 
         var resourceFiles = {};
@@ -1957,11 +1957,11 @@ var aeq = (function () {
           resourceFiles[name] = file;
 
           if (!file.exists || contents.length !== file.length) {
-            file.encoding = "BINARY";
-            file.open("w");
+            file.encoding = 'BINARY';
+            file.open('w');
             var success = file.write(contents);
             if (!success) {
-              if (file.error === "") {
+              if (file.error === '') {
                 resourceFiles[name] = null;
               } else {
                 resourceFiles[name] = new Error(file.error, file.fsName, undefined);
@@ -1983,15 +1983,15 @@ var aeq = (function () {
       getBinaryString: function (filePath) {
         var file = aeq.getFileObject(filePath);
 
-        file.encoding = "BINARY";
-        file.open("r");
+        file.encoding = 'BINARY';
+        file.open('r');
         var fileData = file.read();
         file.close();
 
         var binaryString = fileData.toSource();
 
-        binaryString = binaryString.replace(/^\(new String\("/, "");
-        binaryString = binaryString.replace(/"\)\)$/, "");
+        binaryString = binaryString.replace(/^\(new String\("/, '');
+        binaryString = binaryString.replace(/"\)\)$/, '');
 
         return binaryString;
       },
@@ -2009,14 +2009,14 @@ var aeq = (function () {
        * @memberof aeq
        * @type {Boolean}
        */
-      isMac: $.os.indexOf("Windows") === -1,
+      isMac: $.os.indexOf('Windows') === -1,
 
       /**
        * `true` if system is a Windows
        * @memberof aeq
        * @type {Boolean}
        */
-      isWindows: $.os.indexOf("Windows") !== -1,
+      isWindows: $.os.indexOf('Windows') !== -1,
 
       /**
        * Gets a string containing current OS, AE version and AE language
@@ -2025,7 +2025,7 @@ var aeq = (function () {
        * @return {string} String containing current OS, AE version and AE language
        */
       getSystemInfo: function () {
-        return $.os + " AE " + app.version + "/" + app.isoLanguage;
+        return $.os + ' AE ' + app.version + '/' + app.isoLanguage;
       },
     });
 
@@ -2176,7 +2176,7 @@ var aeq = (function () {
        */
       first: function () {
         if (this.length === 0) {
-          throw new Error("There are no items in this array");
+          throw new Error('There are no items in this array');
         }
 
         return this[0];
@@ -2346,7 +2346,7 @@ var aeq = (function () {
         var len = this.length;
 
         for (var i = 0; i < len; i++) {
-          var key = callback(this[i], i, this) || "undefined";
+          var key = callback(this[i], i, this) || 'undefined';
           var arr = obj[key] || [];
 
           arr.push(this[i]);
@@ -2439,7 +2439,7 @@ var aeq = (function () {
       isAeq: true,
 
       toString: function () {
-        return "[object aeq.Comp]";
+        return '[object aeq.Comp]';
       },
 
       // Function for extending the prototype using objects
@@ -2491,7 +2491,7 @@ var aeq = (function () {
 
         // Check if index is valid
         if (index <= 0 || index > property.numKeys) {
-          throw new Error("Index " + index + " out of range 1-" + property.numKeys);
+          throw new Error('Index ' + index + ' out of range 1-' + property.numKeys);
         }
 
         this.property = property;
@@ -2506,7 +2506,7 @@ var aeq = (function () {
       isAeq: true,
 
       toString: function () {
-        return "[object aeq.Key]";
+        return '[object aeq.Key]';
       },
 
       // Function for extending the prototype using objects
@@ -2528,7 +2528,7 @@ var aeq = (function () {
         if (this.property.keyTime(newIndex) === this.originalTime) {
           this.index = newIndex;
         } else {
-          throw new Error("Original key has been deleted/moved");
+          throw new Error('Original key has been deleted/moved');
         }
       },
 
@@ -2703,18 +2703,18 @@ var aeq = (function () {
         // TemporalEase have to be set using arrays of KeyframeEaseObjects with
         // number of objects in the array matching the propertyValueType
         if (!aeq.isArray(inType)) {
-          if (this.valueTypeIs("TwoD")) {
+          if (this.valueTypeIs('TwoD')) {
             inType = [inType, inType];
-          } else if (this.valueTypeIs("ThreeD")) {
+          } else if (this.valueTypeIs('ThreeD')) {
             inType = [inType, inType, inType];
           } else {
             inType = [inType];
           }
         }
         if (outType && !aeq.isArray(outType)) {
-          if (this.valueTypeIs("TwoD")) {
+          if (this.valueTypeIs('TwoD')) {
             outType = [outType, outType];
-          } else if (this.valueTypeIs("ThreeD")) {
+          } else if (this.valueTypeIs('ThreeD')) {
             outType = [outType, outType, outType];
           } else {
             outType = [outType];
@@ -2790,7 +2790,7 @@ var aeq = (function () {
         }
 
         // These attributes throws an error if valuetype is not spatial when setting
-        if (this.valueTypeIs("TwoD_SPATIAL") || this.valueTypeIs("ThreeD_SPATIAL")) {
+        if (this.valueTypeIs('TwoD_SPATIAL') || this.valueTypeIs('ThreeD_SPATIAL')) {
           keyInfo.spatialAutoBezier = this.spatialAutoBezier();
           keyInfo.spatialContinuous = this.spatialContinuous();
           keyInfo.spatialTangent = this.spatialTangent();
@@ -2858,18 +2858,18 @@ var aeq = (function () {
     // Create many methods that function the same way at the same time
     aeq.forEach(
       [
-        "roving",
-        "selected",
-        "spatialAutoBezier",
-        "spatialContinuous",
-        "temporalAutoBezier",
-        "temporalContinuous",
-        "value",
+        'roving',
+        'selected',
+        'spatialAutoBezier',
+        'spatialContinuous',
+        'temporalAutoBezier',
+        'temporalContinuous',
+        'value',
       ],
       function (type) {
         var typeCapitalized = type.charAt(0).toUpperCase() + type.slice(1);
-        var getter = "key" + typeCapitalized;
-        var setter = "set" + typeCapitalized + "AtKey";
+        var getter = 'key' + typeCapitalized;
+        var setter = 'set' + typeCapitalized + 'AtKey';
 
         aeq.Key.prototype[type] = function () {
           this.checkKey();
@@ -2881,7 +2881,7 @@ var aeq = (function () {
           [].unshift.call(arguments, this.index);
           this.property[setter].apply(this.property, arguments);
         };
-      }
+      },
     );
 
     /**
@@ -2956,7 +2956,7 @@ var aeq = (function () {
       isAeq: true,
 
       toString: function () {
-        return "[object aeq.Layer]";
+        return '[object aeq.Layer]';
       },
 
       // Function for extending the prototype using objects
@@ -3038,7 +3038,7 @@ var aeq = (function () {
        * @return {aeq.Layer}         This layer
        */
       forEachEffect: function (callback) {
-        var effects = this.layer.property("ADBE Effect Parade"),
+        var effects = this.layer.property('ADBE Effect Parade'),
           length = effects.numProperties,
           i = 1;
 
@@ -3055,7 +3055,7 @@ var aeq = (function () {
        * @param  {string} effectName Effect name or matchname to add to layer
        */
       addEffect: function (effectName) {
-        var effects = this.layer.property("ADBE Effect Parade");
+        var effects = this.layer.property('ADBE Effect Parade');
         if (effects.canAddProperty(effectName)) {
           effects.addProperty(effectName);
         } else {
@@ -3109,17 +3109,17 @@ var aeq = (function () {
     // Create methods that only returns the value for attributes that are read-
     // only and can change over time;
     aeq.forEach(
-      ["active", "index", "isNameSet", "selectedProperties", "time", "containingComp", "hasVideo"],
+      ['active', 'index', 'isNameSet', 'selectedProperties', 'time', 'containingComp', 'hasVideo'],
       function (attribute) {
         aeq.Layer.prototype[attribute] = function () {
           return this.layer[attribute];
         };
-      }
+      },
     );
 
     // Create methods for attributes that are basic read/write
     aeq.forEach(
-      ["comment", "enabled", "inPoint", "locked", "name", "outPoint", "shy", "solo", "startTime", "stretch"],
+      ['comment', 'enabled', 'inPoint', 'locked', 'name', 'outPoint', 'shy', 'solo', 'startTime', 'stretch'],
       function (attribute) {
         aeq.Layer.prototype[attribute] = function (newValue) {
           if (arguments.length === 0) {
@@ -3130,12 +3130,12 @@ var aeq = (function () {
           // Return the aeq.Layer object for chaining methods
           return this;
         };
-      }
+      },
     );
 
     // Create Methods that just call the layer object methods
     aeq.forEach(
-      ["activeAtTime", "applyPreset", "duplicate", "remove", "moveToBeginning", "moveToEnd"],
+      ['activeAtTime', 'applyPreset', 'duplicate', 'remove', 'moveToBeginning', 'moveToEnd'],
       function (method) {
         aeq.Layer.prototype[method] = function (newValue) {
           this.layer[method](newValue);
@@ -3143,12 +3143,12 @@ var aeq = (function () {
           // Return the aeq.Layer object for chaining methods
           return this;
         };
-      }
+      },
     );
 
     // Create methods that can take a Layer, aeq.Layer, number or string as input
     // and need to pass that to a method that takes a Layer object
-    aeq.forEach(["setParentWithJump", "moveAfter", "moveBefore"], function (method) {
+    aeq.forEach(['setParentWithJump', 'moveAfter', 'moveBefore'], function (method) {
       aeq.Layer.prototype[method] = function (selector) {
         var layer = getLayer(this.layer, selector);
 
@@ -3248,7 +3248,7 @@ var aeq = (function () {
       isAeq: true,
 
       toString: function () {
-        return "[object aeq.Property]";
+        return '[object aeq.Property]';
       },
 
       // Function for extending the prototype using objects
@@ -3280,7 +3280,7 @@ var aeq = (function () {
           return this.property.expression;
         }
         this.property.expression = newValue;
-        if (this.property.expressionError === "" && (this.property.expressionEnabled || newValue === "")) {
+        if (this.property.expressionError === '' && (this.property.expressionEnabled || newValue === '')) {
           return true;
         }
         return this.property.expressionError;
@@ -3348,7 +3348,7 @@ var aeq = (function () {
       removeKey: function (keyIndex) {
         if (aeq.isNumber(keyIndex)) {
           this.property.removeKey(keyIndex);
-        } else if (keyIndex.toString() === "[object aeq.Key]") {
+        } else if (keyIndex.toString() === '[object aeq.Key]') {
           keyIndex.remove();
         }
       },
@@ -3525,23 +3525,23 @@ var aeq = (function () {
     // Create functions for read-only attributes
     aeq.forEach(
       [
-        "expressionError",
-        "isTimeVarying",
-        "numKeys",
-        "canSetExpression",
-        "canVaryOverTime",
-        "isSpatial",
-        "isSeparationFollower",
-        "isSeparationLeader",
-        "propertyIndex",
-        "propertyValueType",
-        "unitsText",
+        'expressionError',
+        'isTimeVarying',
+        'numKeys',
+        'canSetExpression',
+        'canVaryOverTime',
+        'isSpatial',
+        'isSeparationFollower',
+        'isSeparationLeader',
+        'propertyIndex',
+        'propertyValueType',
+        'unitsText',
       ],
       function (attribute) {
         aeq.Property.prototype[attribute] = function () {
           return this.property[attribute];
         };
-      }
+      },
     );
 
     return aeq;
@@ -3558,7 +3558,7 @@ var aeq = (function () {
       {},
       {
         toString: function () {
-          return "[object aeq.App]";
+          return '[object aeq.App]';
         },
 
         // Function for extending the object using objects
@@ -3578,7 +3578,7 @@ var aeq = (function () {
          * @return {boolean} Security pref status
          */
         securityPrefEnabled: function () {
-          return app.preferences.getPrefAsLong("Main Pref Section", "Pref_SCRIPTING_FILE_NETWORK_SECURITY") === 1;
+          return app.preferences.getPrefAsLong('Main Pref Section', 'Pref_SCRIPTING_FILE_NETWORK_SECURITY') === 1;
         },
 
         /**
@@ -3650,23 +3650,23 @@ var aeq = (function () {
          */
         getPresetsPaths: function () {
           var appVersion = aeq.app.version;
-          var versionPrettyName = "";
+          var versionPrettyName = '';
 
           if (parseInt(appVersion) === 11) {
-            versionPrettyName = "CS6";
+            versionPrettyName = 'CS6';
           } else if (parseInt(appVersion) === 12) {
-            versionPrettyName = "CC";
+            versionPrettyName = 'CC';
           } else if (appVersion >= 13.0 && appVersion < 13.5) {
-            versionPrettyName = "CC 2014";
+            versionPrettyName = 'CC 2014';
           } else if (appVersion >= 13.5 && appVersion < 14.0) {
-            versionPrettyName = "CC 2015";
+            versionPrettyName = 'CC 2015';
           } else if (appVersion >= 14.0) {
-            versionPrettyName = "CC 2017";
+            versionPrettyName = 'CC 2017';
           }
 
           return [
-            Folder.current.fullName + "/Presets/",
-            Folder.myDocuments.fullName + "/Adobe/After Effects " + versionPrettyName + "/User Presets/",
+            Folder.current.fullName + '/Presets/',
+            Folder.myDocuments.fullName + '/Adobe/After Effects ' + versionPrettyName + '/User Presets/',
           ];
         },
 
@@ -3680,9 +3680,9 @@ var aeq = (function () {
           if (!aeq.app.securityPrefEnabled()) {
             if (
               confirm(
-                "This script requires access to write files.\n" +
+                'This script requires access to write files.\n' +
                   'Go to the "General" panel of the application preferences and ensure\n' +
-                  '"Allow Scripts to Write Files and Access Network" is checked.\n\nOpen prefs now?'
+                  '"Allow Scripts to Write Files and Access Network" is checked.\n\nOpen prefs now?',
               )
             ) {
               app.executeCommand(2359); // Launch prefs
@@ -3710,7 +3710,7 @@ var aeq = (function () {
 
           return app.open();
         },
-      }
+      },
     );
 
     // Function aliases
@@ -3731,7 +3731,7 @@ var aeq = (function () {
       {},
       {
         toString: function () {
-          return "[object aeq.command]";
+          return '[object aeq.command]';
         },
 
         // Function for extending the prototype using objects
@@ -3771,7 +3771,7 @@ var aeq = (function () {
           if (aeq.isWindows) {
             command = windows;
           }
-          arg = arg === undefined ? "" : " " + arg;
+          arg = arg === undefined ? '' : ' ' + arg;
           return system.callSystem(command + arg);
         },
 
@@ -3788,15 +3788,15 @@ var aeq = (function () {
         openURL: function (URL) {
           try {
             if (URL.match(/^https?:\/\//) === null) {
-              URL = "http://" + URL;
+              URL = 'http://' + URL;
             }
             aeq.command.call({
               win: 'cmd /c "explorer',
-              mac: "open",
+              mac: 'open',
               arg: URL,
             });
           } catch (err) {
-            alert("Error in openURL function\n" + err.toString());
+            alert('Error in openURL function\n' + err.toString());
           }
         },
 
@@ -3817,7 +3817,7 @@ var aeq = (function () {
           if (aeq.isFile(filePath)) {
             filePath = filePath.fsName;
           }
-          return aeq.command.call("Explorer /select,", "open -R", '"' + filePath + '"');
+          return aeq.command.call('Explorer /select,', 'open -R', '"' + filePath + '"');
         },
 
         /**
@@ -3832,10 +3832,10 @@ var aeq = (function () {
         copyToClipboard: function (text) {
           aeq.command.call(
             'cmd.exe /c cmd.exe /c "echo ' + text + ' | clip"', // Windows
-            'echo "' + text + '" | pbcopy' // MacOS
+            'echo "' + text + '" | pbcopy', // MacOS
           );
         },
-      }
+      },
     );
 
     // Function aliases
@@ -3858,7 +3858,7 @@ var aeq = (function () {
       {},
       {
         toString: function () {
-          return "[object aeq.comp]";
+          return '[object aeq.comp]';
         },
 
         // Function for extending the prototype using objects
@@ -3904,7 +3904,7 @@ var aeq = (function () {
 
           // TODO: Find a way to use the last used settings, or find some defaults
           var defaultOptions = {
-            name: "Comp",
+            name: 'Comp',
             width: 1920,
             height: 1080,
             pixelAspect: 1,
@@ -3920,7 +3920,7 @@ var aeq = (function () {
             options.height,
             options.pixelAspect,
             options.duration,
-            options.frameRate
+            options.frameRate,
           );
         },
 
@@ -3982,7 +3982,7 @@ var aeq = (function () {
         isQueued: function (comp) {
           return aeq.comp.getCompInQueue(comp, true).length > 0;
         },
-      }
+      },
     );
 
     // Function aliases
@@ -4001,7 +4001,7 @@ var aeq = (function () {
       {},
       {
         toString: function () {
-          return "[object aeq.file]";
+          return '[object aeq.file]';
         },
 
         // Function for extending the prototype using objects
@@ -4012,7 +4012,7 @@ var aeq = (function () {
          * @memberof aeq.file
          * @type {string}
          */
-        pathSeparatorSymbol: $.os.indexOf("Windows") > -1 ? "\\" : "/",
+        pathSeparatorSymbol: $.os.indexOf('Windows') > -1 ? '\\' : '/',
 
         // NormalizePathArray, pathIsAbsolute, normalizePath, joinPath adapted from path-browserify
         // (https://github.com/substack/path-browserify/)
@@ -4043,9 +4043,9 @@ var aeq = (function () {
           var up = 0;
           for (var i = parts.length - 1; i >= 0; i--) {
             var last = parts[i];
-            if (last === ".") {
+            if (last === '.') {
               parts.splice(i, 1);
-            } else if (last === "..") {
+            } else if (last === '..') {
               parts.splice(i, 1);
               up++;
             } else if (up) {
@@ -4057,7 +4057,7 @@ var aeq = (function () {
           // If the path is allowed to go above the root, restore leading ..s
           if (allowAboveRoot) {
             for (; up--; up) {
-              parts.unshift("..");
+              parts.unshift('..');
             }
           }
 
@@ -4095,13 +4095,13 @@ var aeq = (function () {
           path = path.join(aeq.file.pathSeparatorSymbol);
 
           if (!path && !pathIsAbsolute) {
-            path = ".";
+            path = '.';
           }
           if (path && trailingSlash) {
             path += aeq.file.pathSeparatorSymbol;
           }
 
-          return (pathIsAbsolute ? aeq.file.pathSeparatorSymbol : "") + path;
+          return (pathIsAbsolute ? aeq.file.pathSeparatorSymbol : '') + path;
         },
 
         /**
@@ -4117,17 +4117,17 @@ var aeq = (function () {
             aeq
               .filter(paths, function (p, index) {
                 // Path is a File or Folder object.
-                if (p && typeof p.fsName === "string") {
+                if (p && typeof p.fsName === 'string') {
                   p = p.fsName;
                   paths[index] = p;
                 }
-                if (typeof p !== "string") {
-                  throw new TypeError("Arguments to path.join must be strings, Files or Folders");
+                if (typeof p !== 'string') {
+                  throw new TypeError('Arguments to path.join must be strings, Files or Folders');
                 }
 
                 return p;
               })
-              .join(aeq.file.pathSeparatorSymbol)
+              .join(aeq.file.pathSeparatorSymbol),
           );
         },
 
@@ -4140,7 +4140,7 @@ var aeq = (function () {
          */
         getExtension: function (filePath) {
           var filePathStr = aeq.isFile(filePath) ? filePath.name : filePath;
-          return filePathStr.substr(filePathStr.lastIndexOf(".") + 1, filePathStr.length);
+          return filePathStr.substr(filePathStr.lastIndexOf('.') + 1, filePathStr.length);
         },
 
         /**
@@ -4152,7 +4152,7 @@ var aeq = (function () {
          */
         stripExtension: function (filePath) {
           var filePathStr = aeq.isFile(filePath) ? filePath.name : filePath;
-          return filePathStr.substr(0, filePathStr.lastIndexOf("."));
+          return filePathStr.substr(0, filePathStr.lastIndexOf('.'));
         },
 
         /**
@@ -4191,7 +4191,7 @@ var aeq = (function () {
          * @return {aeq.arrayEx|null}                 Array of filtered files, or null if none
          */
         getFiles: function (folderPath, filter) {
-          filter = setDefault(filter, "");
+          filter = setDefault(filter, '');
           var folder = aeq.getFolder(folderPath),
             files;
 
@@ -4291,7 +4291,7 @@ var aeq = (function () {
           var file = aeq.getFileObject(filePath),
             contents;
 
-          encoding = setDefault(encoding, "UTF-8");
+          encoding = setDefault(encoding, 'UTF-8');
 
           if (file.exists) {
             if (File.isEncodingAvailable(encoding)) {
@@ -4334,7 +4334,7 @@ var aeq = (function () {
             file.encoding = options.encoding;
           }
 
-          file.open("w");
+          file.open('w');
           var success = file.write(contents);
           file.close();
 
@@ -4356,7 +4356,7 @@ var aeq = (function () {
          */
         selectFiles: function (extensionList, multiSelect) {
           multiSelect = aeq.setDefault(multiSelect, false);
-          var message = multiSelect ? "Please select multiple files" : "Please select file";
+          var message = multiSelect ? 'Please select multiple files' : 'Please select file';
 
           if (!aeq.isArray(extensionList)) {
             extensionList = [extensionList];
@@ -4364,14 +4364,14 @@ var aeq = (function () {
 
           var getFilterForFiles = function () {
             if (aeq.isWin) {
-              return "*." + extensionList.join(";*.");
+              return '*.' + extensionList.join(';*.');
             }
 
-            var extensionListRe = ".(" + extensionList.join("|") + ")$";
-            var re = new RegExp(extensionListRe, "i");
+            var extensionListRe = '.(' + extensionList.join('|') + ')$';
+            var re = new RegExp(extensionListRe, 'i');
 
             return function (file) {
-              return file.name.match(re) || file.constructor.name === "Folder";
+              return file.name.match(re) || file.constructor.name === 'Folder';
             };
           };
 
@@ -4387,7 +4387,7 @@ var aeq = (function () {
 
           return aeq.arrayEx(files);
         },
-      }
+      },
     );
 
     // Function aliases
@@ -4416,7 +4416,7 @@ var aeq = (function () {
       {},
       {
         toString: function () {
-          return "[object aeq.layer]";
+          return '[object aeq.layer]';
         },
 
         // Function for extending the prototype using objects
@@ -4435,11 +4435,11 @@ var aeq = (function () {
          */
         copyLayerToggles: function (sourceLayer, destLayer) {
           var switches =
-            "enabled solo shy quality effectsActive motionBlur " +
-            "adjustmentLayer threeDLayer blendingMode preserveTransparency " +
-            "parent inPoint stretch startTime outPoint label guideLayer " +
-            "name comment autoOrient";
-          switches = switches.split(" ");
+            'enabled solo shy quality effectsActive motionBlur ' +
+            'adjustmentLayer threeDLayer blendingMode preserveTransparency ' +
+            'parent inPoint stretch startTime outPoint label guideLayer ' +
+            'name comment autoOrient';
+          switches = switches.split(' ');
 
           aeq.forEach(switches, function (switchName) {
             destLayer[switchName] = sourceLayer[switchName];
@@ -4509,7 +4509,7 @@ var aeq = (function () {
           var all = parents.push.apply(parents, children);
           return aeq.arrayEx(all);
         },
-      }
+      },
     );
 
     // Function aliases
@@ -4528,7 +4528,7 @@ var aeq = (function () {
       {},
       {
         toString: function () {
-          return "[object aeq.project]";
+          return '[object aeq.project]';
         },
 
         // Function for extending the object using objects
@@ -4706,7 +4706,7 @@ var aeq = (function () {
           var file = aeq.getFileObject(path);
 
           if (file.exists) {
-            if (!confirm("File exists! Overwrite?")) {
+            if (!confirm('File exists! Overwrite?')) {
               return null;
             }
           }
@@ -4743,7 +4743,7 @@ var aeq = (function () {
           var newFile = aeq.getFile(file);
 
           if (!aeq.isFile(newFile)) {
-            throw new Error(file + " is not a valid file!");
+            throw new Error(file + ' is not a valid file!');
           }
 
           if (aeq.isNullOrUndefined(folder)) {
@@ -4763,7 +4763,7 @@ var aeq = (function () {
           try {
             newItem = proj.importFile(iO);
           } catch (e) {
-            throw new Error("Can't import file " + newFile.name + "\n" + String(e));
+            throw new Error("Can't import file " + newFile.name + '\n' + String(e));
           }
 
           if (newItem.duration * newItem.frameRate === 1) {
@@ -4797,7 +4797,7 @@ var aeq = (function () {
           try {
             newItem = app.project.importFile(iO);
           } catch (e) {
-            throw new Error("Can't import file " + file.name + "\n" + String(e));
+            throw new Error("Can't import file " + file.name + '\n' + String(e));
           }
 
           return newItem;
@@ -4869,7 +4869,7 @@ var aeq = (function () {
 
           return queuedComps;
         },
-      }
+      },
     );
 
     // Function aliases
@@ -4893,7 +4893,7 @@ var aeq = (function () {
       {},
       {
         toString: function () {
-          return "[object aeq.property]";
+          return '[object aeq.property]';
         },
 
         // Function for extending the prototype using objects
@@ -4963,7 +4963,7 @@ var aeq = (function () {
           var depth = property.propertyDepth;
           return property.propertyGroup(depth);
         },
-      }
+      },
     );
 
     // Function aliases
@@ -4983,7 +4983,7 @@ var aeq = (function () {
       {},
       {
         toString: function () {
-          return "[object aeq.RenderQueue]";
+          return '[object aeq.RenderQueue]';
         },
 
         // Function for extending the object using objects
@@ -5186,7 +5186,7 @@ var aeq = (function () {
           tempComp.remove();
           return templateExists;
         },
-      }
+      },
     );
 
     // Function aliases
@@ -5205,7 +5205,7 @@ var aeq = (function () {
       {},
       {
         toString: function () {
-          return "[object aeq.settings]";
+          return '[object aeq.settings]';
         },
 
         // Function for extending the object using objects
@@ -5274,9 +5274,9 @@ var aeq = (function () {
         getAsBool: function (sectionName, keyName) {
           var value = aeq.settings.get(sectionName, keyName);
 
-          if (value === "true") {
+          if (value === 'true') {
             return true;
-          } else if (value === "false") {
+          } else if (value === 'false') {
             return false;
           }
 
@@ -5292,7 +5292,7 @@ var aeq = (function () {
          * @return {string[]|undefined} Saved setting as boolean
          */
         getAsArray: function (sectionName, keyName) {
-          return aeq.settings.get(sectionName, keyName).split(",");
+          return aeq.settings.get(sectionName, keyName).split(',');
         },
 
         /**
@@ -5367,7 +5367,7 @@ var aeq = (function () {
 
           return ret;
         },
-      }
+      },
     );
 
     // Function aliases
@@ -5393,7 +5393,7 @@ var aeq = (function () {
       {},
       {
         toString: function () {
-          return "[object aeq.snippet]";
+          return '[object aeq.snippet]';
         },
 
         // Function for extending the object using objects
@@ -5563,30 +5563,30 @@ var aeq = (function () {
          * }
          */
         setOrGetDefault: function (value, defaultVal) {
-          if (typeof value !== "undefined") {
+          if (typeof value !== 'undefined') {
             return value;
           }
 
-          if (typeof defaultVal === "function") {
+          if (typeof defaultVal === 'function') {
             return defaultVal();
           }
 
           return defaultVal;
         },
-      }
+      },
     );
 
     function getCompWithAlert() {
       var comp = aeq.getActiveComp();
       if (comp === null) {
-        alert("No Comp selected");
+        alert('No Comp selected');
       }
       return comp;
     }
 
     function getSelectedLayersWithAlert(comp) {
       if (comp.selectedLayers.length === 0) {
-        alert("No layers selected");
+        alert('No layers selected');
         return null;
       }
       return comp.selectedLayers;
@@ -5594,7 +5594,7 @@ var aeq = (function () {
 
     function getSelectedPropertiesWithAlert(comp) {
       if (comp.selectedProperties.length === 0) {
-        alert("No properties selected");
+        alert('No properties selected');
         return null;
       }
       return comp.selectedProperties;
@@ -5609,7 +5609,7 @@ var aeq = (function () {
 })();
 
 var cssselector = (function () {
-  "use strict";
+  'use strict';
 
   /*
    * Generated by PEG.js 0.9.0.
@@ -5630,9 +5630,9 @@ var cssselector = (function () {
     this.expected = expected;
     this.found = found;
     this.location = location;
-    this.name = "SyntaxError";
+    this.name = 'SyntaxError';
 
-    if (typeof Error.captureStackTrace === "function") {
+    if (typeof Error.captureStackTrace === 'function') {
       Error.captureStackTrace(this, peg$SyntaxError);
     }
   }
@@ -5645,81 +5645,81 @@ var cssselector = (function () {
       peg$FAILED = {},
       peg$startRuleFunctions = { Start: peg$parseStart },
       peg$startRuleFunction = peg$parseStart,
-      peg$c0 = "[",
-      peg$c1 = { type: "literal", value: "[", description: '"["' },
-      peg$c2 = "]",
-      peg$c3 = { type: "literal", value: "]", description: '"]"' },
+      peg$c0 = '[',
+      peg$c1 = { type: 'literal', value: '[', description: '"["' },
+      peg$c2 = ']',
+      peg$c3 = { type: 'literal', value: ']', description: '"]"' },
       peg$c4 = function (props) {
         return mergeProps(props);
       },
-      peg$c5 = "(",
-      peg$c6 = { type: "literal", value: "(", description: '"("' },
-      peg$c7 = ")",
-      peg$c8 = { type: "literal", value: ")", description: '")"' },
+      peg$c5 = '(',
+      peg$c6 = { type: 'literal', value: '(', description: '"("' },
+      peg$c7 = ')',
+      peg$c8 = { type: 'literal', value: ')', description: '")"' },
       peg$c9 = /^[a-zA-Z]/,
-      peg$c10 = { type: "class", value: "[a-zA-Z]", description: "[a-zA-Z]" },
+      peg$c10 = { type: 'class', value: '[a-zA-Z]', description: '[a-zA-Z]' },
       peg$c11 = function (name) {
         var o = {};
-        var key = name.join("");
-        o[key] = { type: "Bool", value: true };
+        var key = name.join('');
+        o[key] = { type: 'Bool', value: true };
         return o;
       },
-      peg$c12 = "=",
-      peg$c13 = { type: "literal", value: "=", description: '"="' },
+      peg$c12 = '=',
+      peg$c13 = { type: 'literal', value: '=', description: '"="' },
       peg$c14 = function (name, value) {
         var o = {};
-        var key = name.join("");
+        var key = name.join('');
         o[key] = value;
         return o;
       },
       peg$c15 = function (type, props, pseudo) {
-        return { type: type.join("").toLowerCase(), props: props, pseudo: pseudo };
+        return { type: type.join('').toLowerCase(), props: props, pseudo: pseudo };
       },
-      peg$c16 = ":",
-      peg$c17 = { type: "literal", value: ":", description: '":"' },
+      peg$c16 = ':',
+      peg$c17 = { type: 'literal', value: ':', description: '":"' },
       peg$c18 = function (type, props) {
-        return { type: type.join("").toLowerCase(), props: props };
+        return { type: type.join('').toLowerCase(), props: props };
       },
       peg$c19 = function (literal) {
         return literal;
       },
       peg$c20 = function () {
-        return { type: "Bool", value: true };
+        return { type: 'Bool', value: true };
       },
       peg$c21 = function () {
-        return { type: "Bool", value: false };
+        return { type: 'Bool', value: false };
       },
-      peg$c22 = "0",
-      peg$c23 = { type: "literal", value: "0", description: '"0"' },
+      peg$c22 = '0',
+      peg$c23 = { type: 'literal', value: '0', description: '"0"' },
       peg$c24 = /^[0-9]/,
-      peg$c25 = { type: "class", value: "[0-9]", description: "[0-9]" },
+      peg$c25 = { type: 'class', value: '[0-9]', description: '[0-9]' },
       peg$c26 = /^[1-9]/,
-      peg$c27 = { type: "class", value: "[1-9]", description: "[1-9]" },
-      peg$c28 = ".",
-      peg$c29 = { type: "literal", value: ".", description: '"."' },
+      peg$c27 = { type: 'class', value: '[1-9]', description: '[1-9]' },
+      peg$c28 = '.',
+      peg$c29 = { type: 'literal', value: '.', description: '"."' },
       peg$c30 = function () {
-        return { type: "Number", value: parseFloat(text()) };
+        return { type: 'Number', value: parseFloat(text()) };
       },
       peg$c31 = function () {
-        return { type: "Integer", value: parseFloat(text()) };
+        return { type: 'Integer', value: parseFloat(text()) };
       },
-      peg$c32 = "0x",
-      peg$c33 = { type: "literal", value: "0x", description: '"0x"' },
+      peg$c32 = '0x',
+      peg$c33 = { type: 'literal', value: '0x', description: '"0x"' },
       peg$c34 = function (digits) {
-        return { type: "Hex", value: parseInt(digits, 16) };
+        return { type: 'Hex', value: parseInt(digits, 16) };
       },
       peg$c35 = /^[0-9a-f]/i,
-      peg$c36 = { type: "class", value: "[0-9a-f]i", description: "[0-9a-f]i" },
+      peg$c36 = { type: 'class', value: '[0-9a-f]i', description: '[0-9a-f]i' },
       peg$c37 = '"',
-      peg$c38 = { type: "literal", value: '"', description: '"\\""' },
+      peg$c38 = { type: 'literal', value: '"', description: '"\\""' },
       peg$c39 = function (chars) {
-        return { type: "String", value: chars.join("") };
+        return { type: 'String', value: chars.join('') };
       },
       peg$c40 = "'",
-      peg$c41 = { type: "literal", value: "'", description: '"\'"' },
-      peg$c42 = "\\",
-      peg$c43 = { type: "literal", value: "\\", description: '"\\\\"' },
-      peg$c44 = { type: "any", description: "any character" },
+      peg$c41 = { type: 'literal', value: "'", description: '"\'"' },
+      peg$c42 = '\\',
+      peg$c43 = { type: 'literal', value: '\\', description: '"\\\\"' },
+      peg$c44 = { type: 'any', description: 'any character' },
       peg$c45 = function () {
         return text();
       },
@@ -5727,83 +5727,83 @@ var cssselector = (function () {
         return sequence;
       },
       peg$c47 = function () {
-        return "";
+        return '';
       },
       peg$c48 = function () {
-        return "\0";
+        return '\0';
       },
-      peg$c49 = "b",
-      peg$c50 = { type: "literal", value: "b", description: '"b"' },
+      peg$c49 = 'b',
+      peg$c50 = { type: 'literal', value: 'b', description: '"b"' },
       peg$c51 = function () {
-        return "\b";
+        return '\b';
       },
-      peg$c52 = "f",
-      peg$c53 = { type: "literal", value: "f", description: '"f"' },
+      peg$c52 = 'f',
+      peg$c53 = { type: 'literal', value: 'f', description: '"f"' },
       peg$c54 = function () {
-        return "\f";
+        return '\f';
       },
-      peg$c55 = "n",
-      peg$c56 = { type: "literal", value: "n", description: '"n"' },
+      peg$c55 = 'n',
+      peg$c56 = { type: 'literal', value: 'n', description: '"n"' },
       peg$c57 = function () {
-        return "\n";
+        return '\n';
       },
-      peg$c58 = "r",
-      peg$c59 = { type: "literal", value: "r", description: '"r"' },
+      peg$c58 = 'r',
+      peg$c59 = { type: 'literal', value: 'r', description: '"r"' },
       peg$c60 = function () {
-        return "\r";
+        return '\r';
       },
-      peg$c61 = "t",
-      peg$c62 = { type: "literal", value: "t", description: '"t"' },
+      peg$c61 = 't',
+      peg$c62 = { type: 'literal', value: 't', description: '"t"' },
       peg$c63 = function () {
-        return "\t";
+        return '\t';
       },
-      peg$c64 = "v",
-      peg$c65 = { type: "literal", value: "v", description: '"v"' },
+      peg$c64 = 'v',
+      peg$c65 = { type: 'literal', value: 'v', description: '"v"' },
       peg$c66 = function () {
-        return "\v";
+        return '\v';
       },
-      peg$c67 = "x",
-      peg$c68 = { type: "literal", value: "x", description: '"x"' },
-      peg$c69 = "u",
-      peg$c70 = { type: "literal", value: "u", description: '"u"' },
+      peg$c67 = 'x',
+      peg$c68 = { type: 'literal', value: 'x', description: '"x"' },
+      peg$c69 = 'u',
+      peg$c70 = { type: 'literal', value: 'u', description: '"u"' },
       peg$c71 = function (digits) {
         return String.fromCharCode(parseInt(digits, 16));
       },
       peg$c72 = /^[\n\r\u2028\u2029]/,
-      peg$c73 = { type: "class", value: "[\\n\\r\\u2028\\u2029]", description: "[\\n\\r\\u2028\\u2029]" },
-      peg$c74 = { type: "other", description: "end of line" },
-      peg$c75 = "\n",
-      peg$c76 = { type: "literal", value: "\n", description: '"\\n"' },
-      peg$c77 = "\r\n",
-      peg$c78 = { type: "literal", value: "\r\n", description: '"\\r\\n"' },
-      peg$c79 = "\r",
-      peg$c80 = { type: "literal", value: "\r", description: '"\\r"' },
-      peg$c81 = "\u2028",
-      peg$c82 = { type: "literal", value: "\u2028", description: '"\\u2028"' },
-      peg$c83 = "\u2029",
-      peg$c84 = { type: "literal", value: "\u2029", description: '"\\u2029"' },
+      peg$c73 = { type: 'class', value: '[\\n\\r\\u2028\\u2029]', description: '[\\n\\r\\u2028\\u2029]' },
+      peg$c74 = { type: 'other', description: 'end of line' },
+      peg$c75 = '\n',
+      peg$c76 = { type: 'literal', value: '\n', description: '"\\n"' },
+      peg$c77 = '\r\n',
+      peg$c78 = { type: 'literal', value: '\r\n', description: '"\\r\\n"' },
+      peg$c79 = '\r',
+      peg$c80 = { type: 'literal', value: '\r', description: '"\\r"' },
+      peg$c81 = '\u2028',
+      peg$c82 = { type: 'literal', value: '\u2028', description: '"\\u2028"' },
+      peg$c83 = '\u2029',
+      peg$c84 = { type: 'literal', value: '\u2029', description: '"\\u2029"' },
       peg$c85 = function (head, tail) {
         head.push(tail);
-        return { type: "Array", value: head };
+        return { type: 'Array', value: head };
       },
-      peg$c86 = ",",
-      peg$c87 = { type: "literal", value: ",", description: '","' },
+      peg$c86 = ',',
+      peg$c87 = { type: 'literal', value: ',', description: '","' },
       peg$c88 = function (value) {
         return value;
       },
-      peg$c89 = "true",
-      peg$c90 = { type: "literal", value: "true", description: '"true"' },
-      peg$c91 = "false",
-      peg$c92 = { type: "literal", value: "false", description: '"false"' },
-      peg$c93 = { type: "other", description: "whitespace" },
+      peg$c89 = 'true',
+      peg$c90 = { type: 'literal', value: 'true', description: '"true"' },
+      peg$c91 = 'false',
+      peg$c92 = { type: 'literal', value: 'false', description: '"false"' },
+      peg$c93 = { type: 'other', description: 'whitespace' },
       peg$c94 = /^[ \t\n\r]/,
-      peg$c95 = { type: "class", value: "[ \\t\\n\\r]", description: "[ \\t\\n\\r]" },
-      peg$c96 = { type: "other", description: "regular expression" },
-      peg$c97 = "/",
-      peg$c98 = { type: "literal", value: "/", description: '"/"' },
+      peg$c95 = { type: 'class', value: '[ \\t\\n\\r]', description: '[ \\t\\n\\r]' },
+      peg$c96 = { type: 'other', description: 'regular expression' },
+      peg$c97 = '/',
+      peg$c98 = { type: 'literal', value: '/', description: '"/"' },
       peg$c99 = function (body, flags) {
         return {
-          type: "RegExp",
+          type: 'RegExp',
           body: body,
           flags: flags,
           value: new RegExp(body, flags),
@@ -5813,27 +5813,27 @@ var cssselector = (function () {
         return char_ + chars;
       },
       peg$c101 = function (chars) {
-        return chars.join("");
+        return chars.join('');
       },
       peg$c102 = /^[*\\\/[]/,
-      peg$c103 = { type: "class", value: "[*\\\\/[]", description: "[*\\\\/[]" },
+      peg$c103 = { type: 'class', value: '[*\\\\/[]', description: '[*\\\\/[]' },
       peg$c104 = function (char_) {
         return char_;
       },
       peg$c105 = /^[\\\/[]/,
-      peg$c106 = { type: "class", value: "[\\\\/[]", description: "[\\\\/[]" },
+      peg$c106 = { type: 'class', value: '[\\\\/[]', description: '[\\\\/[]' },
       peg$c107 = function (char_) {
-        return "\\" + char_;
+        return '\\' + char_;
       },
       peg$c108 = function (chars) {
-        return "[" + chars + "]";
+        return '[' + chars + ']';
       },
       peg$c109 = /^[\]\\]/,
-      peg$c110 = { type: "class", value: "[\\]\\\\]", description: "[\\]\\\\]" },
+      peg$c110 = { type: 'class', value: '[\\]\\\\]', description: '[\\]\\\\]' },
       peg$c111 = /^[gimuy]/,
-      peg$c112 = { type: "class", value: "[gimuy]", description: "[gimuy]" },
+      peg$c112 = { type: 'class', value: '[gimuy]', description: '[gimuy]' },
       peg$c113 = function (parts) {
-        return parts.join("");
+        return parts.join('');
       },
       peg$currPos = 0,
       peg$savedPos = 0,
@@ -5843,9 +5843,9 @@ var cssselector = (function () {
       peg$silentFails = 0,
       peg$result;
 
-    if ("startRule" in options) {
+    if ('startRule' in options) {
       if (!(options.startRule in peg$startRuleFunctions)) {
-        throw new Error("Can't start parsing from rule \"" + options.startRule + '".');
+        throw new Error('Can\'t start parsing from rule "' + options.startRule + '".');
       }
 
       peg$startRuleFunction = peg$startRuleFunctions[options.startRule];
@@ -5862,9 +5862,9 @@ var cssselector = (function () {
     function expected(description) {
       throw peg$buildException(
         null,
-        [{ type: "other", description: description }],
+        [{ type: 'other', description: description }],
         input.substring(peg$savedPos, peg$currPos),
-        peg$computeLocation(peg$savedPos, peg$currPos)
+        peg$computeLocation(peg$savedPos, peg$currPos),
       );
     }
 
@@ -5873,7 +5873,7 @@ var cssselector = (function () {
         message,
         null,
         input.substring(peg$savedPos, peg$currPos),
-        peg$computeLocation(peg$savedPos, peg$currPos)
+        peg$computeLocation(peg$savedPos, peg$currPos),
       );
     }
 
@@ -5899,13 +5899,13 @@ var cssselector = (function () {
 
         while (p < pos) {
           ch = input.charAt(p);
-          if (ch === "\n") {
+          if (ch === '\n') {
             if (!details.seenCR) {
               details.line++;
             }
             details.column = 1;
             details.seenCR = false;
-          } else if (ch === "\r" || ch === "\u2028" || ch === "\u2029") {
+          } else if (ch === '\r' || ch === '\u2028' || ch === '\u2029') {
             details.line++;
             details.column = 1;
             details.seenCR = true;
@@ -5983,24 +5983,24 @@ var cssselector = (function () {
           }
 
           return s
-            .replace(/\\/g, "\\\\")
+            .replace(/\\/g, '\\\\')
             .replace(/"/g, '\\"')
-            .replace(/\x08/g, "\\b")
-            .replace(/\t/g, "\\t")
-            .replace(/\n/g, "\\n")
-            .replace(/\f/g, "\\f")
-            .replace(/\r/g, "\\r")
+            .replace(/\x08/g, '\\b')
+            .replace(/\t/g, '\\t')
+            .replace(/\n/g, '\\n')
+            .replace(/\f/g, '\\f')
+            .replace(/\r/g, '\\r')
             .replace(/[\x00-\x07\x0B\x0E\x0F]/g, function (ch) {
-              return "\\x0" + hex(ch);
+              return '\\x0' + hex(ch);
             })
             .replace(/[\x10-\x1F\x80-\xFF]/g, function (ch) {
-              return "\\x" + hex(ch);
+              return '\\x' + hex(ch);
             })
             .replace(/[\u0100-\u0FFF]/g, function (ch) {
-              return "\\u0" + hex(ch);
+              return '\\u0' + hex(ch);
             })
             .replace(/[\u1000-\uFFFF]/g, function (ch) {
-              return "\\u" + hex(ch);
+              return '\\u' + hex(ch);
             });
         }
 
@@ -6015,12 +6015,12 @@ var cssselector = (function () {
 
         expectedDesc =
           expected.length > 1
-            ? expectedDescs.slice(0, -1).join(", ") + " or " + expectedDescs[expected.length - 1]
+            ? expectedDescs.slice(0, -1).join(', ') + ' or ' + expectedDescs[expected.length - 1]
             : expectedDescs[0];
 
-        foundDesc = found ? '"' + stringEscape(found) + '"' : "end of input";
+        foundDesc = found ? '"' + stringEscape(found) + '"' : 'end of input';
 
-        return "Expected " + expectedDesc + " but " + foundDesc + " found.";
+        return 'Expected ' + expectedDesc + ' but ' + foundDesc + ' found.';
       }
 
       if (expected !== null) {
@@ -8156,7 +8156,7 @@ var cssselector = (function () {
       return peg$result;
     } else {
       if (peg$result !== peg$FAILED && peg$currPos < input.length) {
-        peg$fail({ type: "end", description: "end of input" });
+        peg$fail({ type: 'end', description: 'end of input' });
       }
 
       throw peg$buildException(
@@ -8165,7 +8165,7 @@ var cssselector = (function () {
         peg$maxFailPos < input.length ? input.charAt(peg$maxFailPos) : null,
         peg$maxFailPos < input.length
           ? peg$computeLocation(peg$maxFailPos, peg$maxFailPos + 1)
-          : peg$computeLocation(peg$maxFailPos, peg$maxFailPos)
+          : peg$computeLocation(peg$maxFailPos, peg$maxFailPos),
       );
     }
   }
@@ -8188,7 +8188,7 @@ aeq.ui = (function (ui) {
 
   ui.Container.prototype = {
     toString: function () {
-      return "[object aeq.ui.Container]";
+      return '[object aeq.ui.Container]';
     },
 
     extend: aeq.extend,
@@ -8246,7 +8246,7 @@ aeq.ui = (function (ui) {
      * @return {type}            [description]
      */
     addButton: function (arg1, onClick, properties) {
-      return this._add("button", {
+      return this._add('button', {
         arg1: arg1,
         properties: properties,
         onClick: onClick,
@@ -8263,7 +8263,7 @@ aeq.ui = (function (ui) {
      * @return {type}            [description]
      */
     addCheckbox: function (arg1, onClick, properties) {
-      return this._add("checkbox", {
+      return this._add('checkbox', {
         arg1: arg1,
         properties: properties,
         onClick: onClick,
@@ -8280,7 +8280,7 @@ aeq.ui = (function (ui) {
      * @return {type}            [description]
      */
     addDropdownList: function (arg1, onChange, properties) {
-      return this._add("dropdownlist", {
+      return this._add('dropdownlist', {
         arg1: arg1,
         properties: properties,
         onChange: onChange,
@@ -8298,7 +8298,7 @@ aeq.ui = (function (ui) {
      * @return {type}            [description]
      */
     addEditText: function (arg1, onChange, onChanging, properties) {
-      return this._add("edittext", {
+      return this._add('edittext', {
         arg1: arg1,
         properties: properties,
         onChange: onChange,
@@ -8314,7 +8314,7 @@ aeq.ui = (function (ui) {
      * @return {type}         [description]
      */
     addGroup: function (options) {
-      var group = this.obj.add("group");
+      var group = this.obj.add('group');
       group = new ui.Container(group);
       if (options) {
         group.set(options);
@@ -8349,7 +8349,7 @@ aeq.ui = (function (ui) {
         options.arg1 = options.image || undefined;
       }
 
-      var obj = this.obj.add("iconbutton", options.bounds, options.arg1, options.properties);
+      var obj = this.obj.add('iconbutton', options.bounds, options.arg1, options.properties);
       ui.set(obj, options);
       return obj;
     },
@@ -8381,7 +8381,7 @@ aeq.ui = (function (ui) {
         options.arg1 = options.image || undefined;
       }
 
-      var obj = this.obj.add("image", options.bounds, options.arg1, options.properties);
+      var obj = this.obj.add('image', options.bounds, options.arg1, options.properties);
       ui.set(obj, options);
       return obj;
     },
@@ -8397,7 +8397,7 @@ aeq.ui = (function (ui) {
      * @return {type}               [description]
      */
     addListBox: function (arg1, onChange, onDoubleClick, properties) {
-      var newListBox = this._add("listbox", {
+      var newListBox = this._add('listbox', {
         arg1: arg1,
         properties: properties,
         onChange: onChange,
@@ -8416,7 +8416,7 @@ aeq.ui = (function (ui) {
      * @return {type}            [description]
      */
     addPanel: function (arg1, properties) {
-      var panel = this._add("panel", {
+      var panel = this._add('panel', {
         arg1: arg1,
         properties: properties,
       });
@@ -8432,7 +8432,7 @@ aeq.ui = (function (ui) {
      * @return {type}          [description]
      */
     addProgressbar: function (value, maxValue) {
-      return this.obj.add("progressbar", undefined, value, maxValue);
+      return this.obj.add('progressbar', undefined, value, maxValue);
     },
 
     /**
@@ -8445,7 +8445,7 @@ aeq.ui = (function (ui) {
      * @return {type}            [description]
      */
     addRadioButton: function (arg1, onClick, properties) {
-      return this._add("radiobutton", {
+      return this._add('radiobutton', {
         arg1: arg1,
         properties: properties,
         onClick: onClick,
@@ -8463,7 +8463,7 @@ aeq.ui = (function (ui) {
      * @return {type}            [description]
      */
     addScrollbar: function (value, maxValue, onChange, onChanging) {
-      var scrollbar = this.obj.add("scrollbar", undefined, value, maxValue);
+      var scrollbar = this.obj.add('scrollbar', undefined, value, maxValue);
       scrollbar.onChange = onChange;
       scrollbar.onChanging = onChanging;
       return scrollbar;
@@ -8483,7 +8483,7 @@ aeq.ui = (function (ui) {
     // TODO: Fix number of arguments
     // eslint-disable-next-line
     addSlider: function (value, minValue, maxValue, onChange, onChanging) {
-      var slider = this.obj.add("slider", undefined, value, minValue, maxValue);
+      var slider = this.obj.add('slider', undefined, value, minValue, maxValue);
       slider.onChange = onChange;
       slider.onChanging = onChanging;
       return slider;
@@ -8498,7 +8498,7 @@ aeq.ui = (function (ui) {
      * @return {type}            [description]
      */
     addStaticText: function (text, properties) {
-      return this._add("statictext", {
+      return this._add('statictext', {
         arg1: text,
         properties: properties,
       });
@@ -8512,7 +8512,7 @@ aeq.ui = (function (ui) {
      * @return {aeq.ui.Container} - Tab container object
      */
     addTab: function (text) {
-      var tab = this.obj.add("tab", undefined, text);
+      var tab = this.obj.add('tab', undefined, text);
       return new ui.Container(tab);
     },
 
@@ -8523,7 +8523,7 @@ aeq.ui = (function (ui) {
      * @return {type} [description]
      */
     addTabbedPanel: function () {
-      var tabbedpanel = this.obj.add("tabbedpanel");
+      var tabbedpanel = this.obj.add('tabbedpanel');
       return new ui.Container(tabbedpanel);
     },
 
@@ -8537,7 +8537,7 @@ aeq.ui = (function (ui) {
      * @return {aeq.ui.TreeView}   - aeq.ui.TreeView object
      */
     addTreeView: function (items, onChange, properties) {
-      var newTreeView = this._add("treeview", {
+      var newTreeView = this._add('treeview', {
         arg1: items,
         properties: properties,
         onChange: onChange,
@@ -8610,9 +8610,9 @@ aeq.ui = (function (ui) {
   ui.Container.prototype.addTreeview = ui.Container.prototype.addTreeView;
 
   (function createControllerSetters() {
-    var oneParameters = ["enabled", "helpTip", "orientation", "text", "visible"],
-      twoParameters = ["alignChildren", "alignment", "location", "maximumSize", "minimumSize", "preferredSize", "size"],
-      fourParameters = ["bounds", "margins"];
+    var oneParameters = ['enabled', 'helpTip', 'orientation', 'text', 'visible'],
+      twoParameters = ['alignChildren', 'alignment', 'location', 'maximumSize', 'minimumSize', 'preferredSize', 'size'],
+      fourParameters = ['bounds', 'margins'];
 
     aeq.forEach(oneParameters, function (type) {
       ui.Container.prototype[type] = function (newValue) {
@@ -8662,7 +8662,7 @@ aeq.ui = (function (ui) {
 
   ui.ListBox.prototype = {
     toString: function () {
-      return "[object aeq.ui.ListBox]";
+      return '[object aeq.ui.ListBox]';
     },
 
     extend: aeq.extend,
@@ -8677,7 +8677,7 @@ aeq.ui = (function (ui) {
      * @return {ListItem}     - Created ListITem
      */
     addItem: function (text, image, index) {
-      var item = this.obj.add("item", text, index);
+      var item = this.obj.add('item', text, index);
 
       if (!aeq.isNullOrUndefined(image)) {
         item.image = image;
@@ -8722,7 +8722,7 @@ aeq.ui = (function (ui) {
      * @return {ListItem}      - Ancestor node
      */
     getAncestor: function (item) {
-      while (item.parent.constructor.name !== "ListBox") {
+      while (item.parent.constructor.name !== 'ListBox') {
         item = item.parent;
       }
 
@@ -9036,7 +9036,7 @@ aeq.ui = (function (ui) {
     }
     options = aeq.setDefault(options, { resizeable: true });
 
-    var root = new Window("palette", title, undefined, options);
+    var root = new Window('palette', title, undefined, options);
 
     aeq.ui.root = root;
 
@@ -9054,7 +9054,7 @@ aeq.ui = (function (ui) {
    */
   ui.createWindow = function (title, options) {
     options = aeq.setDefault(options, { resizeable: true });
-    var newWindow = new Window("palette", title, undefined, options);
+    var newWindow = new Window('palette', title, undefined, options);
     return new ui.Window(newWindow);
   };
 
@@ -9069,7 +9069,7 @@ aeq.ui = (function (ui) {
    */
   ui.createDialog = function (title, options) {
     options = aeq.setDefault(options, { resizeable: true });
-    var newWindow = new Window("dialog", title, undefined, options);
+    var newWindow = new Window('dialog', title, undefined, options);
     return new ui.Window(newWindow);
   };
 
@@ -9092,7 +9092,7 @@ aeq.ui = (function (ui) {
    */
   ui.set = function (obj, options) {
     for (var option in options) {
-      if (options.hasOwnProperty(option) && option !== "properties" && option !== "arg1") {
+      if (options.hasOwnProperty(option) && option !== 'properties' && option !== 'arg1') {
         obj[option] = options[option];
       }
     }
@@ -9115,7 +9115,7 @@ aeq.ui = (function (ui) {
   ui.TreeView.prototype = ui.ListBox.prototype;
 
   ui.TreeView.prototype.toString = function () {
-    return "[object aeq.ui.TreeView]";
+    return '[object aeq.ui.TreeView]';
   };
 
   /**
@@ -9137,7 +9137,7 @@ aeq.ui = (function (ui) {
     var item = items[0];
     var temp = item;
 
-    while (item.parent.constructor.name !== "TreeView") {
+    while (item.parent.constructor.name !== 'TreeView') {
       item.parent.expanded = true;
       item = item.parent;
     }
@@ -9160,7 +9160,7 @@ aeq.ui = (function (ui) {
   ui.TreeView.prototype.addNode = function (text, image, index, expanded) {
     expanded = aeq.setDefault(expanded, true);
 
-    var node = this.obj.add("node", text, index);
+    var node = this.obj.add('node', text, index);
 
     if (!aeq.isNullOrUndefined(image)) {
       node.image = image;
@@ -9180,7 +9180,7 @@ aeq.ui = (function (ui) {
    * @returns {_Node}    - Ancestor item
    */
   ui.TreeView.prototype.getAncestor = function (item) {
-    while (item.parent.constructor.name !== "TreeView") {
+    while (item.parent.constructor.name !== 'TreeView') {
       item = item.parent;
     }
 
@@ -9287,7 +9287,7 @@ aeq.ui = (function (ui) {
       if (me.isNode(branch)) {
         me.copyBranch(branch, newNode);
       } else {
-        newNode.add("item", node.text);
+        newNode.add('item', node.text);
       }
     });
   };
@@ -9305,7 +9305,7 @@ aeq.ui = (function (ui) {
       return false;
     }
 
-    return branch.type === "node";
+    return branch.type === 'node';
   };
 
   /**
@@ -9321,7 +9321,7 @@ aeq.ui = (function (ui) {
       return false;
     }
 
-    return branch.type === "item";
+    return branch.type === 'item';
   };
 
   /**
@@ -9346,18 +9346,18 @@ aeq.ui = (function (ui) {
       }
 
       if (this.isNode(sel) && this.isItem(prev)) {
-        sel.parent.add("item", prev.text, sel.index + 1);
+        sel.parent.add('item', prev.text, sel.index + 1);
         this.removeItem(sel);
         return;
       }
 
       if (this.isItem(sel) && this.isNode(prev)) {
-        tree.selection = sel.parent.add("item", sel.text, sel.index - 1);
+        tree.selection = sel.parent.add('item', sel.text, sel.index - 1);
         this.removeItem(sel);
         return;
       }
 
-      var target = sel.parent.add("node", sel.text, sel.index - 1);
+      var target = sel.parent.add('node', sel.text, sel.index - 1);
 
       for (var i = 0, il = target.length; i < il; i++) {
         this.copyBranch(sel.items[i], target);
@@ -9390,18 +9390,18 @@ aeq.ui = (function (ui) {
       }
 
       if (this.isNode(sel) && this.isItem(next)) {
-        sel.parent.add("item", next.text, sel.index - 1);
+        sel.parent.add('item', next.text, sel.index - 1);
         this.removeItem(next);
         return;
       }
 
       if (this.isItem(sel) && this.isNode(next)) {
-        tree.selection = sel.parent.add("item", sel.text, sel.index + 1);
+        tree.selection = sel.parent.add('item', sel.text, sel.index + 1);
         this.removeItem(sel);
         return;
       }
 
-      var target = sel.parent.add("node", sel.text, sel.index + 2);
+      var target = sel.parent.add('node', sel.text, sel.index + 2);
 
       for (var i = 0, il = target.length; i < il; i++) {
         this.copyBranch(sel.items[i], target);

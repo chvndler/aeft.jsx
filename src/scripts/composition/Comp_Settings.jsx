@@ -397,10 +397,7 @@
           };
       pal.grp.dur.opt.onClick = function () {
         var state = this.value;
-        this.parent.fld.enabled =
-          this.parent.durFrames.enabled =
-          this.parent.durSecs.enabled =
-            state;
+        this.parent.fld.enabled = this.parent.durFrames.enabled = this.parent.durSecs.enabled = state;
         if (state) this.parent.fld.active = true;
       };
 
@@ -473,9 +470,7 @@
 
       pal.grp.header.help.onClick = function () {
         alert(
-          rd_CompSetterData.scriptTitle +
-            '\n' +
-            rd_CompSetter_localize(rd_CompSetterData.strHelpText),
+          rd_CompSetterData.scriptTitle + '\n' + rd_CompSetter_localize(rd_CompSetterData.strHelpText),
           rd_CompSetterData.scriptName,
         );
       };
@@ -537,29 +532,19 @@
 
       // Change the comp's layer switches and options
       if (layerDim !== -1) {
-        if (
-          layer instanceof AVLayer ||
-          layer instanceof TextLayer ||
-          layer instanceof ShapeLayer
-        ) {
+        if (layer instanceof AVLayer || layer instanceof TextLayer || layer instanceof ShapeLayer) {
           isLocked = layer.locked; // remember lock status, to restore layer
           layer.locked = false; // temporarily unlock layer so we can change switches
 
           layer.threeDLayer = layerDim !== 2; // not Switch to 2D
-          if (layer instanceof TextLayer && layer.threeDLayer)
-            layer.threeDPerChar = layerDim === 0; // Switch to 3D, including Per-char 3D
+          if (layer instanceof TextLayer && layer.threeDLayer) layer.threeDPerChar = layerDim === 0; // Switch to 3D, including Per-char 3D
 
           layer.locked = isLocked;
         }
       }
 
       // Recurse into pre-comps
-      if (
-        recurse &&
-        layer instanceof AVLayer &&
-        layer.source !== null &&
-        layer.source instanceof CompItem
-      )
+      if (recurse && layer instanceof AVLayer && layer.source !== null && layer.source instanceof CompItem)
         rd_CompSetter_compSetRecursively(
           layer.source,
           width,
@@ -623,10 +608,7 @@
 
     // Check that a project exists
     if (app.project === null) {
-      alert(
-        rd_CompSetter_localize(rd_CompSetterData.strErrNoProj),
-        rd_CompSetterData.scriptName,
-      );
+      alert(rd_CompSetter_localize(rd_CompSetterData.strErrNoProj), rd_CompSetterData.scriptName);
       return;
     }
 
@@ -649,43 +631,24 @@
       comp = selComps[i];
       if (!(comp instanceof CompItem)) continue;
 
-      newWidth = this.parent.parent.width.opt.value
-        ? parseInt(this.parent.parent.width.fld.text)
-        : -1;
-      newHeight = this.parent.parent.height.opt.value
-        ? parseInt(this.parent.parent.height.fld.text)
-        : -1;
-      newPAR = this.parent.parent.par.opt.value
-        ? parseFloat(this.parent.parent.par.fld.text)
-        : -1;
+      newWidth = this.parent.parent.width.opt.value ? parseInt(this.parent.parent.width.fld.text) : -1;
+      newHeight = this.parent.parent.height.opt.value ? parseInt(this.parent.parent.height.fld.text) : -1;
+      newPAR = this.parent.parent.par.opt.value ? parseFloat(this.parent.parent.par.fld.text) : -1;
 
-      newDur = this.parent.parent.dur.opt.value
-        ? parseFloat(this.parent.parent.dur.fld.text)
-        : -1;
-      if (this.parent.parent.dur.durFrames.value && newDur !== -1)
-        newDur /= comp.frameRate;
+      newDur = this.parent.parent.dur.opt.value ? parseFloat(this.parent.parent.dur.fld.text) : -1;
+      if (this.parent.parent.dur.durFrames.value && newDur !== -1) newDur /= comp.frameRate;
 
-      newFPS = this.parent.parent.fps.opt.value
-        ? parseFloat(this.parent.parent.fps.fld.text)
-        : -1;
+      newFPS = this.parent.parent.fps.opt.value ? parseFloat(this.parent.parent.fps.fld.text) : -1;
 
       newRenderer = this.parent.parent.renderer.lst.selection.index - 1;
 
       newPreserveFR = this.parent.parent.preserveFR.lst.selection.index - 1;
       newPreserveRes = this.parent.parent.preserveRes.lst.selection.index - 1;
 
-      newSA = this.parent.parent.sa.opt.value
-        ? parseFloat(this.parent.parent.sa.fld.text)
-        : -1;
-      newSP = this.parent.parent.sp.opt.value
-        ? parseFloat(this.parent.parent.sp.fld.text)
-        : -1;
-      newSPF = this.parent.parent.spf.opt.value
-        ? parseFloat(this.parent.parent.spf.fld.text)
-        : -1;
-      newASL = this.parent.parent.asl.opt.value
-        ? parseFloat(this.parent.parent.asl.fld.text)
-        : -1;
+      newSA = this.parent.parent.sa.opt.value ? parseFloat(this.parent.parent.sa.fld.text) : -1;
+      newSP = this.parent.parent.sp.opt.value ? parseFloat(this.parent.parent.sp.fld.text) : -1;
+      newSPF = this.parent.parent.spf.opt.value ? parseFloat(this.parent.parent.spf.fld.text) : -1;
+      newASL = this.parent.parent.asl.opt.value ? parseFloat(this.parent.parent.asl.fld.text) : -1;
 
       newLayerDim = this.parent.parent.layerDim.lst.selection.index - 1;
 
@@ -716,30 +679,21 @@
 
   // Prerequisites check
   if (parseFloat(app.version) < 10.0)
-    alert(
-      rd_CompSetter_localize(rd_CompSetterData.strMinAE100),
-      rd_CompSetterData.scriptName,
-    );
+    alert(rd_CompSetter_localize(rd_CompSetterData.strMinAE100), rd_CompSetterData.scriptName);
   else {
     // Build and show the console's floating palette
     rdcsePal = rd_CompSetter_buildUI(thisObj);
     if (rdcsePal !== null) {
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_widthOpt'))
         rdcsePal.grp.width.opt.value =
-          app.settings.getSetting('redefinery', 'rd_CompSetter_widthOpt') === 'false'
-            ? false
-            : true;
+          app.settings.getSetting('redefinery', 'rd_CompSetter_widthOpt') === 'false' ? false : true;
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_width'))
-        rdcsePal.grp.width.fld.text = parseInt(
-          app.settings.getSetting('redefinery', 'rd_CompSetter_width'),
-        ).toString();
+        rdcsePal.grp.width.fld.text = parseInt(app.settings.getSetting('redefinery', 'rd_CompSetter_width')).toString();
       rdcsePal.grp.width.fld.enabled = rdcsePal.grp.width.opt.value;
 
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_heightOpt'))
         rdcsePal.grp.height.opt.value =
-          app.settings.getSetting('redefinery', 'rd_CompSetter_heightOpt') === 'false'
-            ? false
-            : true;
+          app.settings.getSetting('redefinery', 'rd_CompSetter_heightOpt') === 'false' ? false : true;
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_height'))
         rdcsePal.grp.height.fld.text = parseInt(
           app.settings.getSetting('redefinery', 'rd_CompSetter_height'),
@@ -748,45 +702,29 @@
 
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_parOpt'))
         rdcsePal.grp.par.opt.value =
-          app.settings.getSetting('redefinery', 'rd_CompSetter_parOpt') === 'false'
-            ? false
-            : true;
+          app.settings.getSetting('redefinery', 'rd_CompSetter_parOpt') === 'false' ? false : true;
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_par'))
-        rdcsePal.grp.par.fld.text = parseFloat(
-          app.settings.getSetting('redefinery', 'rd_CompSetter_par'),
-        ).toString();
+        rdcsePal.grp.par.fld.text = parseFloat(app.settings.getSetting('redefinery', 'rd_CompSetter_par')).toString();
       rdcsePal.grp.par.fld.enabled = rdcsePal.grp.par.opt.value;
 
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_fpsOpt'))
         rdcsePal.grp.fps.opt.value =
-          app.settings.getSetting('redefinery', 'rd_CompSetter_fpsOpt') === 'false'
-            ? false
-            : true;
+          app.settings.getSetting('redefinery', 'rd_CompSetter_fpsOpt') === 'false' ? false : true;
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_fps'))
-        rdcsePal.grp.fps.fld.text = parseFloat(
-          app.settings.getSetting('redefinery', 'rd_CompSetter_fps'),
-        ).toString();
+        rdcsePal.grp.fps.fld.text = parseFloat(app.settings.getSetting('redefinery', 'rd_CompSetter_fps')).toString();
       rdcsePal.grp.fps.fld.enabled = rdcsePal.grp.fps.opt.value;
 
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_durOpt'))
         rdcsePal.grp.dur.opt.value =
-          app.settings.getSetting('redefinery', 'rd_CompSetter_durOpt') === 'false'
-            ? false
-            : true;
+          app.settings.getSetting('redefinery', 'rd_CompSetter_durOpt') === 'false' ? false : true;
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_dur'))
-        rdcsePal.grp.dur.fld.text = parseFloat(
-          app.settings.getSetting('redefinery', 'rd_CompSetter_dur'),
-        ).toString();
+        rdcsePal.grp.dur.fld.text = parseFloat(app.settings.getSetting('redefinery', 'rd_CompSetter_dur')).toString();
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_durFrames'))
         rdcsePal.grp.dur.durFrames.value =
-          app.settings.getSetting('redefinery', 'rd_CompSetter_durFrames') === 'false'
-            ? false
-            : true;
+          app.settings.getSetting('redefinery', 'rd_CompSetter_durFrames') === 'false' ? false : true;
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_durSecs'))
         rdcsePal.grp.dur.durSecs.value =
-          app.settings.getSetting('redefinery', 'rd_CompSetter_durSecs') === 'false'
-            ? false
-            : true;
+          app.settings.getSetting('redefinery', 'rd_CompSetter_durSecs') === 'false' ? false : true;
       rdcsePal.grp.dur.fld.enabled =
         rdcsePal.grp.dur.durFrames.enabled =
         rdcsePal.grp.dur.durSecs.enabled =
@@ -809,46 +747,30 @@
         );
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_saOpt'))
         rdcsePal.grp.sa.opt.value =
-          app.settings.getSetting('redefinery', 'rd_CompSetter_saOpt') === 'false'
-            ? false
-            : true;
+          app.settings.getSetting('redefinery', 'rd_CompSetter_saOpt') === 'false' ? false : true;
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_sa'))
-        rdcsePal.grp.sa.fld.text = parseFloat(
-          app.settings.getSetting('redefinery', 'rd_CompSetter_sa'),
-        ).toString();
+        rdcsePal.grp.sa.fld.text = parseFloat(app.settings.getSetting('redefinery', 'rd_CompSetter_sa')).toString();
       rdcsePal.grp.sa.fld.enabled = rdcsePal.grp.sa.opt.value;
 
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_spOpt'))
         rdcsePal.grp.sp.opt.value =
-          app.settings.getSetting('redefinery', 'rd_CompSetter_spOpt') === 'false'
-            ? false
-            : true;
+          app.settings.getSetting('redefinery', 'rd_CompSetter_spOpt') === 'false' ? false : true;
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_sp'))
-        rdcsePal.grp.sp.fld.text = parseFloat(
-          app.settings.getSetting('redefinery', 'rd_CompSetter_sp'),
-        ).toString();
+        rdcsePal.grp.sp.fld.text = parseFloat(app.settings.getSetting('redefinery', 'rd_CompSetter_sp')).toString();
       rdcsePal.grp.sp.fld.enabled = rdcsePal.grp.sp.opt.value;
 
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_spfOpt'))
         rdcsePal.grp.spf.opt.value =
-          app.settings.getSetting('redefinery', 'rd_CompSetter_spfOpt') === 'false'
-            ? false
-            : true;
+          app.settings.getSetting('redefinery', 'rd_CompSetter_spfOpt') === 'false' ? false : true;
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_spf'))
-        rdcsePal.grp.spf.fld.text = parseFloat(
-          app.settings.getSetting('redefinery', 'rd_CompSetter_spf'),
-        ).toString();
+        rdcsePal.grp.spf.fld.text = parseFloat(app.settings.getSetting('redefinery', 'rd_CompSetter_spf')).toString();
       rdcsePal.grp.spf.fld.enabled = rdcsePal.grp.spf.opt.value;
 
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_aslOpt'))
         rdcsePal.grp.asl.opt.value =
-          app.settings.getSetting('redefinery', 'rd_CompSetter_aslOpt') === 'false'
-            ? false
-            : true;
+          app.settings.getSetting('redefinery', 'rd_CompSetter_aslOpt') === 'false' ? false : true;
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_asl'))
-        rdcsePal.grp.asl.fld.text = parseFloat(
-          app.settings.getSetting('redefinery', 'rd_CompSetter_asl'),
-        ).toString();
+        rdcsePal.grp.asl.fld.text = parseFloat(app.settings.getSetting('redefinery', 'rd_CompSetter_asl')).toString();
       rdcsePal.grp.asl.fld.enabled = rdcsePal.grp.asl.opt.value;
 
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_layerDim'))
@@ -859,132 +781,38 @@
 
       if (app.settings.haveSetting('redefinery', 'rd_CompSetter_recursive'))
         rdcsePal.grp.recursive.value =
-          app.settings.getSetting('redefinery', 'rd_CompSetter_recursive') === 'false'
-            ? false
-            : true;
+          app.settings.getSetting('redefinery', 'rd_CompSetter_recursive') === 'false' ? false : true;
 
       // Save current UI settings upon closing the palette
       rdcsePal.onClose = function () {
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_widthOpt',
-          this.grp.width.opt.value,
-        );
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_width',
-          this.grp.width.fld.text,
-        );
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_heightOpt',
-          this.grp.height.opt.value,
-        );
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_height',
-          this.grp.height.fld.text,
-        );
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_parOpt',
-          this.grp.par.opt.value,
-        );
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_par',
-          this.grp.par.fld.text,
-        );
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_fpsOpt',
-          this.grp.fps.opt.value,
-        );
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_fps',
-          this.grp.fps.fld.text,
-        );
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_durOpt',
-          this.grp.dur.opt.value,
-        );
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_dur',
-          this.grp.dur.fld.text,
-        );
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_durFrames',
-          this.grp.dur.durFrames.value,
-        );
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_durSecs',
-          this.grp.dur.durSecs.value,
-        );
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_widthOpt', this.grp.width.opt.value);
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_width', this.grp.width.fld.text);
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_heightOpt', this.grp.height.opt.value);
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_height', this.grp.height.fld.text);
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_parOpt', this.grp.par.opt.value);
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_par', this.grp.par.fld.text);
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_fpsOpt', this.grp.fps.opt.value);
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_fps', this.grp.fps.fld.text);
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_durOpt', this.grp.dur.opt.value);
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_dur', this.grp.dur.fld.text);
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_durFrames', this.grp.dur.durFrames.value);
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_durSecs', this.grp.dur.durSecs.value);
 
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_renderer',
-          this.grp.renderer.lst.selection.index,
-        );
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_preserveFR',
-          this.grp.preserveFR.lst.selection.index,
-        );
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_preserveRes',
-          this.grp.preserveRes.lst.selection.index,
-        );
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_saOpt',
-          this.grp.sa.opt.value,
-        );
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_renderer', this.grp.renderer.lst.selection.index);
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_preserveFR', this.grp.preserveFR.lst.selection.index);
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_preserveRes', this.grp.preserveRes.lst.selection.index);
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_saOpt', this.grp.sa.opt.value);
         app.settings.saveSetting('redefinery', 'rd_CompSetter_sa', this.grp.sa.fld.text);
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_spOpt',
-          this.grp.sp.opt.value,
-        );
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_spOpt', this.grp.sp.opt.value);
         app.settings.saveSetting('redefinery', 'rd_CompSetter_sp', this.grp.sp.fld.text);
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_spfOpt',
-          this.grp.spf.opt.value,
-        );
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_spf',
-          this.grp.spf.fld.text,
-        );
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_aslOpt',
-          this.grp.asl.opt.value,
-        );
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_asl',
-          this.grp.asl.fld.text,
-        );
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_spfOpt', this.grp.spf.opt.value);
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_spf', this.grp.spf.fld.text);
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_aslOpt', this.grp.asl.opt.value);
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_asl', this.grp.asl.fld.text);
 
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_layerDim',
-          this.grp.layerDim.lst.selection.index,
-        );
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_layerDim', this.grp.layerDim.lst.selection.index);
 
-        app.settings.saveSetting(
-          'redefinery',
-          'rd_CompSetter_recursive',
-          this.grp.recursive.value,
-        );
+        app.settings.saveSetting('redefinery', 'rd_CompSetter_recursive', this.grp.recursive.value);
       };
 
       if (rdcsePal instanceof Window) {

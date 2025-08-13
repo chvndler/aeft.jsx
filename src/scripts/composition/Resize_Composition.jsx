@@ -54,10 +54,7 @@
       } else {
         if (test_scale * activeItem.width < 1 || test_scale * activeItem.width > 30000) {
           is_ok = false;
-        } else if (
-          test_scale * activeItem.height < 1 ||
-          test_scale * activeItem.height > 30000
-        ) {
+        } else if (test_scale * activeItem.height < 1 || test_scale * activeItem.height > 30000) {
           is_ok = false;
         }
       }
@@ -89,10 +86,7 @@
           if (testNewScale(new_scale_factor)) {
             scale_factor = new_scale_factor;
           } else {
-            alert(
-              'Value will make height or width out of range 1 to 30000. Reverting to previous value.',
-              scriptName,
-            );
+            alert('Value will make height or width out of range 1 to 30000. Reverting to previous value.', scriptName);
             // Load text back in from current values.
             if (scaleButton.value == true) {
               onScaleButtonClick();
@@ -164,9 +158,7 @@
     function BuildAndShowUI(thisObj) {
       // Create and show a floating palette.
       var my_palette =
-        thisObj instanceof Panel
-          ? thisObj
-          : new Window('palette', scriptName, undefined, { resizeable: true });
+        thisObj instanceof Panel ? thisObj : new Window('palette', scriptName, undefined, { resizeable: true });
       if (my_palette != null) {
         var res =
           "group { \
