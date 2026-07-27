@@ -1,73 +1,54 @@
 # aeft.jsx
 
-Public Repo of Adobe® After Effects scripts, snippets, style, and more.
+Public repository of Adobe After Effects expressions and scripts.
 
-# 🎞️ AE Expressions & Scripts
+## Overview
 
-A curated library of After Effects expressions, scripts, and animation presets I use in motion design projects. Organized like a JS codebase for easy navigation and reuse.
+This project keeps AE snippets organized like a lightweight codebase:
 
----
+- `src/expressions` for copy/paste expressions
+- `src/scripts` for full ScriptUI or utility scripts
+- `src/lib` for shared script helpers and templates
 
-## 📁 Folder Structure
+The expressions folder is now organized by intent, and each file contains one snippet for easier discovery.
 
-```
-├── src/
-│   ├── expressions/
-│   │   ├── animation/
-│   │   │   └── bounce-ease.jsx
-│   │   ├── text/
-│   │   │   ├── typewriter.jsx
-│   │   │   └── tracking-style.jsx
-│   │   ├── layout/
-│   │   │   └── auto-spacing.jsx
-│   │   └── utility/
-│   │       └── remap.jsx
-│   ├── scripts/
-│   │   └── batch-update-fonts.jsx
-│   └── presets/
-│       └── text-style.ffx
-├── docs/
-│   └── README.md
-├── examples/
-│   └── project-links.md
-├── .gitignore
-├── README.md
-├── LICENSE
+## Project Structure
+
+```text
+src/
+├── expressions/
+│   ├── README.md
+│   ├── color/
+│   ├── controllers/
+│   │   └── velocity-driven/
+│   ├── counters/
+│   ├── datetime/
+│   ├── keyframes/
+│   ├── layout/
+│   └── text/
+├── lib/
+└── scripts/
+    └── composition/
 ```
 
----
+## Usage
 
-## 🔧 Usage
+### Expressions
 
-### ✨ Expressions
+1. Open a file from `src/expressions`.
+2. Copy its contents.
+3. Paste into an After Effects expression field.
+4. Adjust layer/control names called out in comments.
 
-1. Copy any `.jsx` file from `src/expressions/`
-2. Paste directly into the property’s expression field in After Effects
-3. Customize any exposed variables if needed
+### Scripts
 
-### 📜 Scripts
+- Run `.jsx` scripts from `File > Scripts > Run Script File...`
+- Or place them in your After Effects Scripts directory.
 
-- Run `.jsx` files via `File > Scripts > Run Script File…` or place in your AE Scripts folder
-- Useful for bulk updates like font/style changes across projects
+## Formatting
 
-### 🎛 Presets
+- Run `yarn pretty` to format all `.js`/`.jsx` source files with Prettier.
 
-- Drag `.ffx` files into AE or import into the Effects & Presets panel
+## License
 
----
-
-## 🧠 Suggestions
-
-- Always label your control layers clearly (`_CTRL` suffix)
-- Modularize reusable components in AE the same way this repo is structured
-- Combine multiple expressions into presets for faster deployment
-
----
-
-## 📂 License
-
-MIT — use freely, tweak endlessly.
-
----
-
-## ☕ Created by [@chandler](https://github.com/chandler)
+ISC (see `LICENSE`).
