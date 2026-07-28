@@ -1,34 +1,60 @@
-(function wireframeTimelineDriver(thisObj) {
-  var SCRIPT_ID = 'wireframeTimelineDriver';
+(function wireframePlayer(thisObj) {
+  var PLAYER_KEY = '__wireframePlayer__';
 
-  if (!$.global[SCRIPT_ID]) {
-    $.global[SCRIPT_ID] = {
-      running: false,
-      taskID: null,
-      frameStep: 1,
-      loop: true,
-    };
+  // Stop an older instance before rebuilding the panel.
+  if ($.global[PLAYER_KEY] && $.global[PLAYER_KEY].taskID !== null) {
+    try {
+      app.cancelTask($.global[PLAYER_KEY].taskID);
+    } catch (error) {}
   }
 
-  var state = $.global[SCRIPT_ID];
+  var player = {
+    running: false,
+    taskID: null,
+    frameStep: 1,
+    loop: true,
+    delay: 33,
+  };
 
-  $.global.wireframeTimelineTick = function () {
-    var comp = app.project.activeItem;
+  $.global[PLAYER_KEY] = player;
 
-    if (!state.running || !(comp instanceof CompItem)) {
-      state.running = false;
+  player.getActiveComp = function () {
+    var item = app.project.activeItem;
+
+    if (item && item instanceof CompItem) {
+      return item;
+    }
+
+    return null;
+  };
+
+  player.tick = function () {
+    if (!player.running) {
+      player.taskID = null;
       return;
     }
 
-    var nextTime = comp.time + comp.frameDuration * state.frameStep;
-    var endTime = comp.workAreaStart + comp.workAreaDuration;
+    var comp = player.getActiveComp();
 
-    if (nextTime >= endTime) {
-      if (state.loop) {
-        nextTime = comp.workAreaStart;
+    if (!comp) {
+      player.stop();
+      return;
+    }
+
+    var frameDuration = comp.frameDuration;
+    var workStart = comp.workAreaStart;
+    var workEnd = workStart + comp.workAreaDuration;
+    var nextTime = comp.time + frameDuration * player.frameStep;
+
+    // Allow for floating-point timing differences.
+    if (nextTime >= workEnd - frameDuration * 0.25) {
+      if (player.loop) {
+        nextTime = workStart;
       } else {
-        comp.time = endTime - comp.frameDuration;
-        state.running = false;
+        comp.time = Math.max(workStart, workEnd - frameDuration);
+
+        app.refresh();
+        player.stop();
         return;
       }
     }
@@ -36,55 +62,53 @@
     comp.time = nextTime;
     app.refresh();
 
-    if (state.running) {
-      var delay = Math.max(1, Math.round(comp.frameDuration * 1000 * state.frameStep));
-
-      state.taskID = app.scheduleTask('wireframeTimelineTick()', delay, false);
+    if (player.running) {
+      player.taskID = app.scheduleTask('$.global["' + PLAYER_KEY + '"].tick()', player.delay, false);
     }
   };
 
-  function startPlayback() {
-    var comp = app.project.activeItem;
+  player.start = function () {
+    var comp = player.getActiveComp();
 
-    if (!(comp instanceof CompItem)) {
-      alert('Open or select a composition first.');
+    if (!comp || player.running) {
       return;
     }
 
-    if (state.running) {
-      return;
+    player.delay = Math.max(15, Math.round(comp.frameDuration * player.frameStep * 1000));
+
+    player.running = true;
+    player.tick();
+  };
+
+  player.stop = function () {
+    player.running = false;
+
+    if (player.taskID !== null) {
+      try {
+        app.cancelTask(player.taskID);
+      } catch (error) {}
+
+      player.taskID = null;
     }
+  };
 
-    state.frameStep = parseInt(frameStepInput.text, 10) || 1;
-    state.frameStep = Math.max(1, state.frameStep);
-    state.loop = loopCheckbox.value;
-    state.running = true;
+  player.reset = function () {
+    player.stop();
 
-    $.global.wireframeTimelineTick();
-  }
+    var comp = player.getActiveComp();
 
-  function stopPlayback() {
-    state.running = false;
-
-    if (state.taskID !== null) {
-      app.cancelTask(state.taskID);
-      state.taskID = null;
-    }
-  }
-
-  function resetPlayback() {
-    stopPlayback();
-
-    var comp = app.project.activeItem;
-
-    if (comp instanceof CompItem) {
+    if (comp) {
       comp.time = comp.workAreaStart;
       app.refresh();
     }
-  }
+  };
 
   var panel =
-    thisObj instanceof Panel ? thisObj : new Window('palette', 'Wireframe Player', undefined, { resizeable: true });
+    thisObj instanceof Panel
+      ? thisObj
+      : new Window('palette', 'Wireframe Player', undefined, {
+          resizeable: true,
+        });
 
   panel.orientation = 'column';
   panel.alignChildren = ['fill', 'top'];
@@ -92,32 +116,67 @@
   panel.margins = 12;
 
   var settingsGroup = panel.add('group');
+  settingsGroup.orientation = 'row';
+  settingsGroup.alignChildren = ['left', 'center'];
+
   settingsGroup.add('statictext', undefined, 'Frame step:');
 
   var frameStepInput = settingsGroup.add('edittext', undefined, '1');
+
   frameStepInput.characters = 4;
 
-  var loopCheckbox = settingsGroup.add('checkbox', undefined, 'Loop work area');
+  var loopCheckbox = panel.add('checkbox', undefined, 'Loop work area');
+
   loopCheckbox.value = true;
 
   var controls = panel.add('group');
+  controls.orientation = 'row';
+  controls.alignChildren = ['fill', 'center'];
 
   var playButton = controls.add('button', undefined, 'Play');
+
   var stopButton = controls.add('button', undefined, 'Stop');
+
   var resetButton = controls.add('button', undefined, 'Reset');
 
-  playButton.onClick = startPlayback;
-  stopButton.onClick = stopPlayback;
-  resetButton.onClick = resetPlayback;
+  playButton.onClick = function () {
+    var comp = player.getActiveComp();
 
-  panel.onClose = stopPlayback;
+    if (!comp) {
+      alert('Open or select a composition first.');
+      return;
+    }
 
-  panel.layout.layout(true);
-  panel.layout.resize();
+    var frameStep = parseInt(frameStepInput.text, 10);
+
+    if (isNaN(frameStep) || frameStep < 1) {
+      frameStep = 1;
+      frameStepInput.text = '1';
+    }
+
+    player.frameStep = frameStep;
+    player.loop = loopCheckbox.value;
+    player.start();
+  };
+
+  stopButton.onClick = function () {
+    player.stop();
+  };
+
+  resetButton.onClick = function () {
+    player.reset();
+  };
+
+  panel.onClose = function () {
+    player.stop();
+  };
 
   panel.onResizing = panel.onResize = function () {
     this.layout.resize();
   };
+
+  panel.layout.layout(true);
+  panel.layout.resize();
 
   if (panel instanceof Window) {
     panel.center();
